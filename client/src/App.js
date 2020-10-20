@@ -27,7 +27,6 @@ class App extends Component {
             Edit <code>src/App.js</code> and save to reload.
           </p>
           <p className="App-intro">{this.state.apiResponse}</p>
-          </a>
         </header>
       </div>
     );
