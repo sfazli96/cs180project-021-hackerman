@@ -1,19 +1,22 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Navbar from './components/Navbar';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './pages';
+import US from './pages/US';
+import World from './pages/World';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <p className="App-intro">{this.state.apiResponse}</p>
-        </header>
-      </div>
+      <Router>
+         <Navbar></Navbar>
+         <Switch>
+           <Route path="/" exact component={Home}></Route>
+           <Route path="/US" component={US}></Route>
+           <Route path="/World" component={World}></Route>
+         </Switch>
+      </Router>
     );
   }
 }
