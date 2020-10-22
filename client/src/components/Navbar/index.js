@@ -31,10 +31,10 @@ const Navbar = () => {
                     <NavLink to = "World" activeStyle> 
                         World
                     </NavLink>
-                    <NavBtnLink to='/signin'>Sign in</NavBtnLink>
+                    <NavBtnLink to='/InformationPage'>Information Page</NavBtnLink>
                 </NavMenu>
                 <NavBtn> 
-                    <NavBtnLink to='/signin'>Sign in</NavBtnLink>
+                <NavBtnLink to='/signin'>Sign in</NavBtnLink>
                 </NavBtn>
             </Nav>
         </div>
