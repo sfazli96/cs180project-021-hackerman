@@ -13,7 +13,7 @@ const Navbar = () => {
         <div>
             <Nav>
                 <NavLink to = "/">
-                    <h1>Logo</h1>
+                    <h1>Youtube</h1>
                 </NavLink>
                 <Bars> 
 
@@ -23,7 +23,7 @@ const Navbar = () => {
                         Home
                     </NavLink>
                     <NavLink to = "/US" activeStyle> 
-                        US
+                        United States
                     </NavLink>
                     <NavLink to = "/contact-us" activeStyle> 
                         Contact Us
@@ -31,6 +31,7 @@ const Navbar = () => {
                     <NavLink to = "World" activeStyle> 
                         World
                     </NavLink>
+                    <NavBtnLink to='/signin'>Sign in</NavBtnLink>
                 </NavMenu>
                 <NavBtn> 
                     <NavBtnLink to='/signin'>Sign in</NavBtnLink>
