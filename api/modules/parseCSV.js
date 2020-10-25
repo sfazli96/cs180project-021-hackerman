@@ -5,10 +5,10 @@ function parseCSV(filepath) {
 	var file = fs.readFileSync(filepath, 'utf8');
     var rows = file.split('\n');
     var data = {};
-    console.log(rows.length)
+    
     // Create list of headers
     var headers = rows[0].split(',');
-    console.log(headers);
+    
     // Create keys using headers in JSON object
     for(var i = 0; i <= headers.length-1; i++) {
     	var header = headers[i].split(',');
@@ -18,10 +18,9 @@ function parseCSV(filepath) {
     }
     // Current Problem is I cannot split each row by ','
     // Must find another way to split each row.
-    //console.log(rows[25].split(',')[6].split('|'))
     for(var i = 1; i <= rows.length-2; i++){
     	// Grab single row to splut
-    	var row = parseLine(rows[i], i);
+    	var row = parseLine(rows[i]);
 
     	data['video_id'].push(row[0]);
     	data['trending_date'].push(row[1]);
@@ -47,11 +46,10 @@ function parseCSV(filepath) {
     	data['description'].push(row[15]);
     }
 
-    //console.log(data['tags'][40948]);
     return data;
 }
 
-function parseLine(line, j) {
+function parseLine(line) {
 
 	var parsedLine = [];
 	var quotes = false;
@@ -74,7 +72,6 @@ function parseLine(line, j) {
 				cell = '';
 			}
 			else if(i == line.length-1){
-				//console.log(i, line.charAt(i), line.length, line.charAt(line.length));
 				parsedLine.push('');
 			}
 		}
@@ -106,5 +103,5 @@ function parseLine(line, j) {
 	return parsedLine;
 }
 
-// const filepath = '../data/USvideos.csv';
-// parseCSV(filepath)
+const filepath = '../data/USvideos.csv';
+var data = parseCSV(filepath);
