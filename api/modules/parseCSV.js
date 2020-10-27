@@ -103,5 +103,16 @@ function parseLine(line) {
 	return parsedLine;
 }
 
-const filepath = '../data/USvideos.csv';
-var data = parseCSV(filepath);
+// Save the data structure as a JSON file
+function saveJSON(filename, data){
+	var jsonDATA = JSON.stringify(data);
+	fs.writeFile(`${filename}.txt`, jsonDATA, function(err) {
+		if(err){
+			console.log(err);
+		}
+	});
+}
+
+// const filepath = '../data/USvideos.csv';
+// var data = parseCSV(filepath);
+// saveJSON( 'USVideos', data);
