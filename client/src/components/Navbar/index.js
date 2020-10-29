@@ -12,12 +12,12 @@ const Navbar = () => {
     return (
         <div>
             <Nav>
-                <NavLink to = "/">
+                <NavLink to = "/home">
                     <h1>Youtube</h1>
                 </NavLink>
-                <Bars> 
+                // <Bars> 
 
-                </Bars>
+                // </Bars>
                 <NavMenu>
                     <NavLink to = "/home" activeStyle> 
                         Home
@@ -25,17 +25,10 @@ const Navbar = () => {
                     <NavLink to = "/US" activeStyle> 
                         United States
                     </NavLink>
-                    <NavLink to = "/contact-us" activeStyle> 
-                        Contact Us
-                    </NavLink>
                     <NavLink to = "World" activeStyle> 
                         World
                     </NavLink>
-                    <NavBtnLink to='/InformationPage'>Information Page</NavBtnLink>
                 </NavMenu>
-                <NavBtn> 
-                <NavBtnLink to='/signin'>Sign in</NavBtnLink>
-                </NavBtn>
             </Nav>
         </div>
     )

@@ -116,3 +116,8 @@ function saveJSON(filename, data){
 // const filepath = '../data/USvideos.csv';
 // var data = parseCSV(filepath);
 // saveJSON( 'USVideos', data);
+
+module.exports = {
+	parseCSV: parseCSV,
+	saveJSON: saveJSON,
+};
