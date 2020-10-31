@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load rest_framework %}
+
+{% block page_content %}
+	<div class='container'>
+		<h1>US SHIT</h1>
+		<!-- FORM GOES HERE -->
+		<form action="{% url 'US' %}" method="POST">
+			{% csrf_token %}
+			{% render_form serializer %}
+			<input type="submit" value="Save">
+		</form>
+		<ul>
+			{% for d in data %}
+			<li>{{ d.video_id }}</li>
+			<li>{{ d.channel_title }}</li>
+			<li>{{ d.trending_date }}</li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock %}
