@@ -1,5 +1,6 @@
 Sprint-1/*.sublime-workspace
 mysite/api/data/
+mysite/client/data
 logs
 *.log
 npm-debug.log*

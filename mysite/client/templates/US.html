@@ -1,21 +1,22 @@
 {% extends "base.html" %}
-{% load rest_framework %}
 
 {% block page_content %}
 	<div class='container'>
-		<h1>US SHIT</h1>
+		<h1>Trending videos on Youtube in the United States</h1>
 		<!-- FORM GOES HERE -->
-		<form action="{% url 'US' %}" method="POST">
+		<form action="{% url 'US' %}" method="post">
+			{{ form.as_p }}
 			{% csrf_token %}
-			{% render_form serializer %}
-			<input type="submit" value="Save">
+			<input type="submit" class="btn btn-info" value="Submit">
 		</form>
+		{% if submitbutton == "Submit" %}
 		<ul>
-			{% for d in data %}
-			<li>{{ d.video_id }}</li>
-			<li>{{ d.channel_title }}</li>
-			<li>{{ d.trending_date }}</li>
-			{% endfor %}
+			<li>{{ video_id }}</li>
+			<li>{{ channel_title }}</li>
+			<li>{{ publish_date }}</li>
+			<li>{{ category }}</li>
+			<li>{{ tags }}</li>
 		</ul>
+		{% endif %}
 	</div>
 {% endblock %}
