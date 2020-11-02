@@ -1,3 +1,4 @@
+from difflib import SequenceMatcher
 
 # Parse CSV files with these helper function
 def parseCSV(filepath):
@@ -77,3 +78,28 @@ def parseLine(line):
 	# 	print('Somet fucked')
 
 	return parsedLine;
+
+def searchCSV(filepath, query):
+	# Send in data as dictionary from POST
+	# Search parsed CSV file for these values
+	data = parseCSV(filepath)
+	response = {}
+	response['video_id'] = []
+	response['channel_title'] = []
+	response['publish_time'] = []
+	response['category_id'] = []
+	response['tags'] = []
+	indices_of_queries = []
+
+	for i, j in enumerate(data['channel_title']):
+		if SequenceMatcher(lambda x: x=='', j, query['channel_title']).ratio() > 0.6:
+			indices_of_queries.append(i)
+
+	for index in indices_of_queries:
+		response['video_id'].append(data['video_id'][index])
+		response['channel_title'].append(data['channel_title'][index])
+		response['publish_time'].append(data['publish_time'][index])
+		response['category_id'].append(data['category_id'][index])
+		response['tags'].append(data['tags'][index])
+
+	return response

@@ -4,19 +4,36 @@
 	<div class='container'>
 		<h1>Trending videos on Youtube in the United States</h1>
 		<!-- FORM GOES HERE -->
-		<form action="{% url 'US' %}" method="post">
+		<form method="GET">
 			{{ form.as_p }}
 			{% csrf_token %}
 			<input type="submit" class="btn btn-info" value="Submit">
 		</form>
-		{% if submitbutton == "Submit" %}
-		<ul>
-			<li>{{ video_id }}</li>
-			<li>{{ channel_title }}</li>
-			<li>{{ publish_date }}</li>
-			<li>{{ category }}</li>
-			<li>{{ tags }}</li>
-		</ul>
+		{% if data.channel_title == None %}
+		{% else %}
+		<h1>These are the results for {{data.channel_title}}</h1>
+		<table class="table">
+			<thead class="thead-dark">
+			<tr>
+				<th> Video ID </th>
+				<th> Channel Title </th>
+				<th> Publish Time </th>
+				<th> Category ID </th>
+				<th> Tags </th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+			{% for value in search.values %}
+				<td>
+				{% for v in value %}
+					{{ v }}
+				{% endfor %}
+				</td>
+			{% endfor %}
+			</tr>
+			</tbody>
+		</table>
 		{% endif %}
 	</div>
 {% endblock %}
