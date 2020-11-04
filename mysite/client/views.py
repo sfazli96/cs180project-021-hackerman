@@ -2,12 +2,15 @@ from django.shortcuts import render
 from django.views import View
 from .forms import USForm
 from .helpers import *
+from .analytics import *
+from plotly.offline import plot
+import plotly.graph_objs as go
 
 def home(request):
 	return render(request, 'home.html', {})
 
 class UnitedStatesView(View):
-	filepath = 'YOUR_DATA_PATH'
+	filepath = '/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/USvideos.csv'
 	template_name = 'US.html'
 	form = USForm
 
@@ -45,3 +48,19 @@ class UnitedStatesView(View):
 		context = {'form': form, 'data': data, 'submitbutton': submitbutton}
 
 		return render(request, self.template_name, context)
+
+def averagePerCategory(request):
+	context = {}
+	avg_per = avg_per_cat('/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/USvideos.csv')
+
+	categories = list(avg_per.keys())
+	avg_likes = [avg_per[cat]['avg_likes'] for cat in categories]
+	avg_dislikes = [avg_per[cat]['avg_dislikes'] for cat in categories]
+	avg_views = [avg_per[cat]['avg_views'] for cat in categories]
+	likes_div = plot([go.Bar(x=categories, y=avg_likes, name='Average Likes Per Category in the USA')], output_type='div')
+	dislikes_div = plot([go.Bar(x=categories, y=avg_dislikes, name='Average Dislikes Per Category in the USA')], output_type='div')
+	views_div = plot([go.Bar(x=categories, y=avg_views, name='Average Views Per Category in the USA')], output_type='div')
+	context['likes_div'] = likes_div
+	context['dislikes_div'] = dislikes_div
+	context['views_div'] = views_div
+	return render(request, 'avgPerCat.html', context)
