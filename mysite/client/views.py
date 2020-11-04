@@ -7,7 +7,7 @@ def home(request):
 	return render(request, 'home.html', {})
 
 class UnitedStatesView(View):
-	filepath = '/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/USvideos.csv'
+	filepath = 'YOUR_DATA_PATH'
 	template_name = 'US.html'
 	form = USForm
 

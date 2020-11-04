@@ -88,18 +88,36 @@ def searchCSV(filepath, query):
 	response['channel_title'] = []
 	response['publish_time'] = []
 	response['category_id'] = []
-	response['tags'] = []
+	response['trending_date'] = []
+	response['views'] = []
+	response['likes'] = []
+	response['dislikes'] = []
+	response['comment_count'] = []
 	indices_of_queries = []
 
 	for i, j in enumerate(data['channel_title']):
 		if SequenceMatcher(lambda x: x=='', j, query['channel_title']).ratio() > 0.6:
-			indices_of_queries.append(i)
+			if query['video_id'] or query['publish_time'] or query['category_id'] or query['tags']:
+				if query['video_id'] == data['video_id'][i]:
+					indices_of_queries.append(i)
+				elif query['publish_time'] == data['publish_time'][i]:
+					indices_of_queries.append(i)
+				elif query['category_id'] == data['category_id'][i]:
+					indices_of_queries.append(i)
+				elif query['tags'] in data['tags'][i]:
+					indices_of_queries.append(i)
+			else:
+				indices_of_queries.append(i)
 
-	for index in indices_of_queries:
+	for index in list(set(indices_of_queries)):
 		response['video_id'].append(data['video_id'][index])
 		response['channel_title'].append(data['channel_title'][index])
-		response['publish_time'].append(data['publish_time'][index])
+		response['publish_time'].append(data['publish_time'][index][:10])
 		response['category_id'].append(data['category_id'][index])
-		response['tags'].append(data['tags'][index])
+		response['trending_date'].append(data['trending_date'][index])
+		response['views'].append(data['views'][index])
+		response['likes'].append(data['likes'][index])
+		response['dislikes'].append(data['dislikes'][index])
+		response['comment_count'].append(data['comment_count'][index])
 
 	return response
