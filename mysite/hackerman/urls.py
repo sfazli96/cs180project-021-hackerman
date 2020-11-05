@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from client import helpers
 
-global_data = helpers.loadCSV('<YOUR_PATH_HERE>')
+global_data = helpers.loadCSV('/mnt/d/Documents/UC-Riverside/Fall-2020/CS180/Class-Projects/cs180project-021-hackerman/mysite/client/data/USvideos.csv')
 
 urlpatterns = [
     path('', include('client.urls')),
