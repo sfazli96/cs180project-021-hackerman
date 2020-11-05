@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+	<div class='container'>
+		<h1>Top 20 Most Disliked Videos</h1>
+		<!-- CHARTS GO HERE -->
+        {% autoescape off %}
+        {{mostDislikedDiv}}
+		{% endautoescape %}
+	</div>
+{% endblock %}

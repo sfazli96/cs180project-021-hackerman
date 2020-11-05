@@ -68,3 +68,49 @@ def averagePerCategory(request):
 	context['dislikes_div'] = dislikes_div
 	context['views_div'] = views_div
 	return render(request, 'avgPerCat.html', context)
+
+def top20MostLiked(request):
+	context = {}
+	mostLiked = top_20_most_liked()
+
+	# Split the dictionary into two separate lists
+	most_liked_keys = []
+	most_liked_vals = []
+	items = mostLiked.items()
+	for item in items:
+		most_liked_keys.append(item[0]), most_liked_vals.append(item[1])
+
+	# Loops that print output of each list, only for testing
+	'''for i in range(len(most_liked_keys)):
+		print(most_liked_keys[i])
+
+	for i in range(len(most_liked_vals)):
+		print(most_liked_vals[i])'''
+
+	most_likes_fig = go.Figure(data=[go.Bar(x=most_liked_keys, y=most_liked_vals)], layout=go.Layout(title='Top 20 Most Liked Videos', yaxis={'title': 'Likes'}, xaxis={'title': 'Video Name'[:12]}))
+	mostLikedDiv = plot(figure_or_data=most_likes_fig, output_type='div')
+	context['mostLikedDiv'] = mostLikedDiv
+	return render(request, 'top20MostLiked.html', context)
+
+def top20MostDisliked(request):
+	context = {}
+	mostDisliked = top_20_most_disliked()
+
+	# Split the dictionary into two separate lists
+	most_disliked_keys = []
+	most_disliked_vals = []
+	items = mostDisliked.items()
+	for item in items:
+		most_disliked_keys.append(item[0]), most_disliked_vals.append(item[1])
+
+	# Loops that print output of each list, only for testing
+	'''for i in range(len(most_disliked_keys)):
+		print(most_disliked_keys[i])
+
+	for i in range(len(most_disliked_vals)):
+		print(most_disliked_vals[i])'''
+
+	most_dislikes_fig = go.Figure(data=[go.Bar(x=most_disliked_keys, y=most_disliked_vals)], layout=go.Layout(title='Top 20 Most Disliked Videos', yaxis={'title': 'Dislikes'}, xaxis={'title': 'Video Name'[:12]}))
+	mostDislikedDiv = plot(figure_or_data=most_dislikes_fig, output_type='div')
+	context['mostDislikedDiv'] = mostDislikedDiv
+	return render(request, 'top20MostDisliked.html', context)
