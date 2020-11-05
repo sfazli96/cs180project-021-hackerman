@@ -55,7 +55,7 @@ def top_20_most_liked():
 
 	# Create an empty dictionary for the above two lists
 	twentyMostLiked = {}
-	top20 = {}
+	top20mostliked = {}
 
 	# Convert the likes list values into integers
 	for i in range(0, len(list_likes)):
@@ -73,9 +73,44 @@ def top_20_most_liked():
 
 	# Sort the dictionary from most to least likes, and then push the top 20 results into another dictionary file
 	k = Counter(twentyMostLiked)
-	top20 = dict(k.most_common(20))
+	top20mostliked = dict(k.most_common(20))
 
-	return top20
+	return top20mostliked
+
+# filepath = '/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/USvideos.csv'
+# avg_per_cat(filepath)
+
+def top_20_most_disliked():
+	# Note: This is my personal data path, will fix this later for when we have the rest of the countries
+	data = parseCSV('/mnt/d/Documents/UC-Riverside/Fall-2020/CS180/Class-Projects/cs180project-021-hackerman/mysite/client/data/USvideos.csv')
+
+	# Create two lists: one for the keys, and one for the values
+	list_titles = list(set(data['title']))
+	list_dislikes = list(set(data['dislikes']))
+
+	# Create an empty dictionary for the above two lists
+	twentyMostDisliked = {}
+	top20mostdisliked = {}
+
+	# Convert the dislikes list values into integers
+	for i in range(0, len(list_dislikes)):
+		list_dislikes[i] = int(list_dislikes[i])
+
+	# One way of putting both lists into a dictionary file
+	'''for key in list_titles:
+		for value in list_dislikes:
+			twentyMostDisliked[key] = value
+			list_dislikes.remove(value)
+			break'''
+	
+	# Another way of putting both lists into a dictionary file
+	twentyMostDisliked = {list_titles[i]: list_dislikes[i] for i in range(len(list_titles))}
+
+	# Sort the dictionary from most to least dislikes, and then push the top 20 results into another dictionary file
+	k = Counter(twentyMostDisliked)
+	top20mostdisliked = dict(k.most_common(20))
+
+	return top20mostdisliked
 
 # filepath = '/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/USvideos.csv'
 # avg_per_cat(filepath)
