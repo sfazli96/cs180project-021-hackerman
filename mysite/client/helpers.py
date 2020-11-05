@@ -3,7 +3,6 @@ from hackerman import urls
 
 def loadCSV(filepath):
 	# Load up CSV so that it's available to all
-	print('Look at me.', filepath)
 	return parseCSV(filepath)
 
 # Parse CSV files with these helper function
@@ -40,6 +39,7 @@ def parseCSV(filepath):
 			data['video_error_or_removed'].append(row[14])
 			data['description'].append(row[15])
 		rows.close()
+	print(len(data['likes']))
 	return data
 
 def parseLine(line):
