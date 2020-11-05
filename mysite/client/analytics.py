@@ -1,4 +1,5 @@
 from .helpers import *
+from hackerman import urls
 import json
 
 def categories_to_names(category):
@@ -9,28 +10,27 @@ def categories_to_names(category):
 			f.close()
 			return item['snippet']['title']
 
-def avg_per_cat(filepath):
-	data = parseCSV(filepath)
+def avg_per_cat():
 
 	response = {}
 	names = {}
-	categories = list(set(data['category_id']))
+	categories = list(set(urls.global_data['category_id']))
 	for cat in categories:
 		name = categories_to_names(cat)
 		names[cat] = name
 		response[name] = {'likes': [0, 0], 'dislikes': [0, 0], 'views': [0, 0]}
 
-	for i, value in enumerate(data['category_id']):
+	for i, value in enumerate(urls.global_data['category_id']):
 		if value:
 			#name = categories_to_names(value)
-			if data['likes'][i]:
-				response[names[value]]['likes'][0] += int(data['likes'][i])
+			if urls.global_data['likes'][i]:
+				response[names[value]]['likes'][0] += int(urls.global_data['likes'][i])
 				response[names[value]]['likes'][1] += 1
-			if data['dislikes'][i]:
-				response[names[value]]['dislikes'][0] += int(data['dislikes'][i])
+			if urls.global_data['dislikes'][i]:
+				response[names[value]]['dislikes'][0] += int(urls.global_data['dislikes'][i])
 				response[names[value]]['dislikes'][1] += 1
-			if data['views'][i]:
-				response[names[value]]['views'][0] += int(data['views'][i])
+			if urls.global_data['views'][i]:
+				response[names[value]]['views'][0] += int(urls.global_data['views'][i])
 				response[names[value]]['views'][1] += 1
 
 	analyze_this = {}

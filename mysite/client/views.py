@@ -5,12 +5,12 @@ from .helpers import *
 from .analytics import *
 from plotly.offline import plot
 import plotly.graph_objs as go
+from hackerman import urls
 
 def home(request):
 	return render(request, 'home.html', {})
 
 class UnitedStatesView(View):
-	filepath = '/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/USvideos.csv'
 	template_name = 'US.html'
 	form = USForm
 
@@ -18,13 +18,14 @@ class UnitedStatesView(View):
 		data = {}
 		context = {}
 		form = USForm()
+		#print(global_data)
 		data['channel_title'] = request.GET.get('channel_title')
 		data['video_id'] = request.GET.get('video_id')
 		data['publish_time'] = request.GET.get('publish_time')
 		data['category_id'] = request.GET.get('category_id')
 		data['tags'] = request.GET.get('tags')
 		if request.GET.get('channel_title'):
-			search = searchCSV(self.filepath, data)
+			search = searchCSV(data)
 			context['search'] = search
 			#print(search)
 		context['form'] = form
@@ -51,15 +52,18 @@ class UnitedStatesView(View):
 
 def averagePerCategory(request):
 	context = {}
-	avg_per = avg_per_cat('/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/USvideos.csv')
+	avg_per = avg_per_cat()
 
 	categories = list(avg_per.keys())
 	avg_likes = [avg_per[cat]['avg_likes'] for cat in categories]
 	avg_dislikes = [avg_per[cat]['avg_dislikes'] for cat in categories]
 	avg_views = [avg_per[cat]['avg_views'] for cat in categories]
-	likes_div = plot([go.Bar(x=categories, y=avg_likes, name='Average Likes Per Category in the USA')], output_type='div')
-	dislikes_div = plot([go.Bar(x=categories, y=avg_dislikes, name='Average Dislikes Per Category in the USA')], output_type='div')
-	views_div = plot([go.Bar(x=categories, y=avg_views, name='Average Views Per Category in the USA')], output_type='div')
+	likes_fig = go.Figure(data=[go.Bar(x=categories, y=avg_likes)], layout=go.Layout(title='Average Likes Per Category in the USA', yaxis={'title': 'Likes'}, xaxis={'title': 'Categories'}))
+	dislikes_fig = go.Figure(data=[go.Bar(x=categories, y=avg_dislikes)], layout=go.Layout(title='Average Dislikes Per Category in the USA', yaxis={'title': 'Dislikes'}, xaxis={'title': 'Categories'}))
+	views_fig = go.Figure(data=[go.Bar(x=categories, y=avg_views)], layout=go.Layout(title='Average Views Per Category in the USA', yaxis={'title': 'Views'}, xaxis={'title': 'Categories'}))
+	likes_div = plot(figure_or_data=likes_fig, output_type='div')
+	dislikes_div = plot(figure_or_data=dislikes_fig, output_type='div')
+	views_div = plot(figure_or_data=views_fig, output_type='div')
 	context['likes_div'] = likes_div
 	context['dislikes_div'] = dislikes_div
 	context['views_div'] = views_div
