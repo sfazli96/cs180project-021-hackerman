@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+	<div class='container'>
+		<h1>Select Country or Countries to filter data</h1>
+		<input type="checkbox" name="great_britain" value="on"/> Great Britian
+		<ul>
+  	<li>
+  		<a class="nav-link" href="{% url 'great_britain' %}" >Great Britain</a>
+  	</li>
+  	<li>
+  		<a class="nav-link" href="{% url 'canada' %}">Canada</a>
+		</ul>
+	</div>
+{% endblock %}
