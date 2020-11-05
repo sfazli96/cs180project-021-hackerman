@@ -46,12 +46,9 @@ def avg_per_cat():
 	return analyze_this
 
 def top_20_most_liked():
-	# Note: This is my personal data path, will fix this later for when we have the rest of the countries
-	data = parseCSV('/mnt/d/Documents/UC-Riverside/Fall-2020/CS180/Class-Projects/cs180project-021-hackerman/mysite/client/data/USvideos.csv')
-
 	# Create two lists: one for the keys, and one for the values
-	list_titles = list(set(data['title']))
-	list_likes = list(set(data['likes']))
+	list_titles = list(urls.global_data['title'])
+	list_likes = list(urls.global_data['likes'])
 
 	# Create an empty dictionary for the above two lists
 	twentyMostLiked = {}
@@ -81,12 +78,9 @@ def top_20_most_liked():
 # avg_per_cat(filepath)
 
 def top_20_most_disliked():
-	# Note: This is my personal data path, will fix this later for when we have the rest of the countries
-	data = parseCSV('/mnt/d/Documents/UC-Riverside/Fall-2020/CS180/Class-Projects/cs180project-021-hackerman/mysite/client/data/USvideos.csv')
-
 	# Create two lists: one for the keys, and one for the values
-	list_titles = list(set(data['title']))
-	list_dislikes = list(set(data['dislikes']))
+	list_titles = list(urls.global_data['title'])
+	list_dislikes = list(urls.global_data['dislikes'])
 
 	# Create an empty dictionary for the above two lists
 	twentyMostDisliked = {}
