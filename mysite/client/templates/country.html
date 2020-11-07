@@ -1,15 +1,24 @@
 {% extends "base.html" %}
 
 {% block page_content %}
-  <div class='container'>
-    <h1>Select Country or Countries to filter data</h1>
-    <input type="checkbox" name="great_britain" value="on"/> Great Britian
-    <ul>
-    <li>
-      <a class="nav-link" href="{% url 'great_britain' %}" >Great Britain</a>
-    </li>
-    <li>
-      <a class="nav-link" href="{% url 'canada' %}">Canada</a>
-    </ul>
-  </div>
+<html>
+<body>
+
+<h1>The select multiple attribute</h1>
+<label for="country">Choose a Country or Countries to filter:</label>
+<form action="/great_britain">
+  <select name="country" id="country" multiple>
+    <option value="Great Britain">Great Britain</option>
+    <option value="Japan">Japan</option>
+    <option value="Canada">Canada</option>
+    <option value="France">France</option>
+    <option value="India">India</option>
+    <option value="South Korea">South Korea</option>
+  </select>
+  <br><br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
+
 {% endblock %}

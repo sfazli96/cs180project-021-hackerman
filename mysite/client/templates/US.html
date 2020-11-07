@@ -8,6 +8,7 @@
 			{{ form.as_p }}
 			{% csrf_token %}
 			<input type="submit" class="btn btn-info" value="Submit">
+			<a href="{% url 'home' %}">Go back to home page</a>
 		</form>
 		{% if data.channel_title == None %}
 		{% else %}

@@ -7,6 +7,18 @@ class USForm(forms.Form):
 	category_id = forms.IntegerField(required=False, label='Category ID:')
 	tags = forms.CharField(required=False, label='Tags:')
 
+COUNTRIES = [
+  ('great britain', 'Great Britain'),
+  ('russia', 'Russia'),
+  ('japan', 'Japan'),
+  ('canada', 'Canada'),
+  ('france', 'France'),
+  ('india', 'India'),
+  ('south korea', 'South Korea'),
+  ('mexico', 'Mexico'),
+  {'germany', 'Germany'},
+]
+
 
 
 class countryForm(forms.Form):
@@ -16,9 +28,8 @@ class countryForm(forms.Form):
 	publish_date = forms.DateField(required=False, label='Publish Date:')
 	category_id = forms.IntegerField(required=False, label='Category ID:')
 	tags = forms.CharField(required=False, label='Tags:')
-	is_valid = forms.BooleanField(label='Is Valid', label_suffix=" : ",
-                                  required=True, disabled=False,
-                                  widget=forms.widgets.CheckboxInput(attrs={'class': 'checkbox-inline'}),
-                                  help_text="Please check the box as this field is required.",
-                                  error_messages={'required': "Please check the box"})
+	country= forms.CharField(label='Choose a country', widget=forms.Select(choices=COUNTRIES))
+
+
+	
 
