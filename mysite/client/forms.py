@@ -16,4 +16,9 @@ class countryForm(forms.Form):
 	publish_date = forms.DateField(required=False, label='Publish Date:')
 	category_id = forms.IntegerField(required=False, label='Category ID:')
 	tags = forms.CharField(required=False, label='Tags:')
+	is_valid = forms.BooleanField(label='Is Valid', label_suffix=" : ",
+                                  required=True, disabled=False,
+                                  widget=forms.widgets.CheckboxInput(attrs={'class': 'checkbox-inline'}),
+                                  help_text="Please check the box as this field is required.",
+                                  error_messages={'required': "Please check the box"})
 

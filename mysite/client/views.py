@@ -134,6 +134,3 @@ def country(request):
 	checkboxes_selected = request.POST.getlist('options[]')
 	return render(request, 'country.html', {})
 
-def action_page(request):
-	return render(request, 'action_page.html', {})
-
