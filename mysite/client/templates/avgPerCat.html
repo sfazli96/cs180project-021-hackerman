@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+	<div class='container'>
+		<h1>Average likes/dislikes/views per category in the USA.</h1>
+		<!-- CHARTS GO HERE -->
+		{% autoescape off %}
+		{{likes_div}}
+		{{dislikes_div}}
+		{{views_div}}
+		{% endautoescape %}
+	</div>
+{% endblock %}

@@ -15,6 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from client import helpers
+
+global_data = helpers.loadCSV('/home/kratos/Documents/cs180project-021-hackerman/mysite/client/data/USvideos.csv')
 
 urlpatterns = [
     path('', include('client.urls')),

@@ -1,4 +1,9 @@
 from difflib import SequenceMatcher
+from hackerman import urls
+
+def loadCSV(filepath):
+	# Load up CSV so that it's available to all
+	return parseCSV(filepath)
 
 # Parse CSV files with these helper function
 def parseCSV(filepath):
@@ -34,6 +39,7 @@ def parseCSV(filepath):
 			data['video_error_or_removed'].append(row[14])
 			data['description'].append(row[15])
 		rows.close()
+	print(len(data['likes']))
 	return data
 
 def parseLine(line):
@@ -79,10 +85,10 @@ def parseLine(line):
 
 	return parsedLine;
 
-def searchCSV(filepath, query):
+def searchCSV(query):
 	# Send in data as dictionary from POST
 	# Search parsed CSV file for these values
-	data = parseCSV(filepath)
+	#data = global_data
 	response = {}
 	response['video_id'] = []
 	response['channel_title'] = []
@@ -95,29 +101,29 @@ def searchCSV(filepath, query):
 	response['comment_count'] = []
 	indices_of_queries = []
 
-	for i, j in enumerate(data['channel_title']):
+	for i, j in enumerate(urls.global_data['channel_title']):
 		if SequenceMatcher(lambda x: x=='', j, query['channel_title']).ratio() > 0.6:
 			if query['video_id'] or query['publish_time'] or query['category_id'] or query['tags']:
-				if query['video_id'] == data['video_id'][i]:
+				if query['video_id'] == urls.global_data['video_id'][i]:
 					indices_of_queries.append(i)
-				elif query['publish_time'] == data['publish_time'][i]:
+				elif query['publish_time'] == urls.global_data['publish_time'][i]:
 					indices_of_queries.append(i)
-				elif query['category_id'] == data['category_id'][i]:
+				elif query['category_id'] == urls.global_data['category_id'][i]:
 					indices_of_queries.append(i)
-				elif query['tags'] in data['tags'][i]:
+				elif query['tags'] in urls.global_data['tags'][i]:
 					indices_of_queries.append(i)
 			else:
 				indices_of_queries.append(i)
 
 	for index in list(set(indices_of_queries)):
-		response['video_id'].append(data['video_id'][index])
-		response['channel_title'].append(data['channel_title'][index])
-		response['publish_time'].append(data['publish_time'][index][:10])
-		response['category_id'].append(data['category_id'][index])
-		response['trending_date'].append(data['trending_date'][index])
-		response['views'].append(data['views'][index])
-		response['likes'].append(data['likes'][index])
-		response['dislikes'].append(data['dislikes'][index])
-		response['comment_count'].append(data['comment_count'][index])
+		response['video_id'].append(urls.global_data['video_id'][index])
+		response['channel_title'].append(urls.global_data['channel_title'][index])
+		response['publish_time'].append(urls.global_data['publish_time'][index][:10])
+		response['category_id'].append(urls.global_data['category_id'][index])
+		response['trending_date'].append(urls.global_data['trending_date'][index])
+		response['views'].append(urls.global_data['views'][index])
+		response['likes'].append(urls.global_data['likes'][index])
+		response['dislikes'].append(urls.global_data['dislikes'][index])
+		response['comment_count'].append(urls.global_data['comment_count'][index])
 
 	return response
