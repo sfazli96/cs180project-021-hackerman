@@ -87,7 +87,7 @@ def top20MostLiked(request):
 	for i in range(len(most_liked_vals)):
 		print(most_liked_vals[i])'''
 
-	most_likes_fig = go.Figure(data=[go.Bar(x=most_liked_keys, y=most_liked_vals)], layout=go.Layout(title='Top 20 Most Liked Videos', yaxis={'title': 'Likes'}, xaxis={'title': 'Video Name'[:12]}))
+	most_likes_fig = go.Figure(data=[go.Bar(x=most_liked_keys, y=most_liked_vals)], layout=go.Layout(title='<b>Top 20 Most Liked Videos', yaxis={'title': '<b>Likes'}, xaxis={'title': '<b>Video Name'}))
 	mostLikedDiv = plot(figure_or_data=most_likes_fig, output_type='div')
 	context['mostLikedDiv'] = mostLikedDiv
 	return render(request, 'top20MostLiked.html', context)
@@ -110,7 +110,17 @@ def top20MostDisliked(request):
 	for i in range(len(most_disliked_vals)):
 		print(most_disliked_vals[i])'''
 
-	most_dislikes_fig = go.Figure(data=[go.Bar(x=most_disliked_keys, y=most_disliked_vals)], layout=go.Layout(title='Top 20 Most Disliked Videos', yaxis={'title': 'Dislikes'}, xaxis={'title': 'Video Name'[:12]}))
+	most_dislikes_fig = go.Figure(data=[go.Bar(x=most_disliked_keys, y=most_disliked_vals)], layout=go.Layout(title='<b>Top 20 Most Disliked Videos', yaxis={'title': '<b>Dislikes'}, xaxis={'title': '<b>Video Name'}))
 	mostDislikedDiv = plot(figure_or_data=most_dislikes_fig, output_type='div')
 	context['mostDislikedDiv'] = mostDislikedDiv
+
+	# Create a box that outputs the average number of likes
+	average_most_dislikes = 0
+
+	for i in most_disliked_vals:
+		average_most_dislikes += i
+
+	average_most_dislikes = average_most_dislikes / len(most_disliked_vals)
+	context['averageMostDislikes'] = average_most_dislikes
+
 	return render(request, 'top20MostDisliked.html', context)
