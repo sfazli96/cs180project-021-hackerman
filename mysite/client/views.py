@@ -90,6 +90,16 @@ def top20MostLiked(request):
 	most_likes_fig = go.Figure(data=[go.Bar(x=most_liked_keys, y=most_liked_vals)], layout=go.Layout(title='<b>Top 20 Most Liked Videos', yaxis={'title': '<b>Likes'}, xaxis={'title': '<b>Video Name'}))
 	mostLikedDiv = plot(figure_or_data=most_likes_fig, output_type='div')
 	context['mostLikedDiv'] = mostLikedDiv
+
+	# Create a box that outputs the average number of likes
+	average_most_likes = 0
+
+	for i in most_liked_vals:
+		average_most_likes += i
+
+	average_most_likes = average_most_likes / len(most_liked_vals)
+	context['averageMostLikes'] = average_most_likes
+
 	return render(request, 'top20MostLiked.html', context)
 
 def top20MostDisliked(request):
@@ -114,7 +124,7 @@ def top20MostDisliked(request):
 	mostDislikedDiv = plot(figure_or_data=most_dislikes_fig, output_type='div')
 	context['mostDislikedDiv'] = mostDislikedDiv
 
-	# Create a box that outputs the average number of likes
+	# Create a box that outputs the average number of dislikes
 	average_most_dislikes = 0
 
 	for i in most_disliked_vals:
