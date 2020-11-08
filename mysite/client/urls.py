@@ -6,5 +6,6 @@ urlpatterns = [
 	path('avg_per_cat/', views.averagePerCategory, name='avgPerCat'),
 	path('top_20_most_liked/', views.top20MostLiked, name='top20MostLiked'),
 	path('top_20_most_disliked/', views.top20MostDisliked, name='top20MostDisliked'),
+	path('disabled/', views.disabledCommentsAndRatings, name='disabledCommentsAndRatings'),
 	path('', views.home, name='home'),
 ]

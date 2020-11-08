@@ -7,7 +7,7 @@ def loadCSV(filepath):
 
 # Parse CSV files with these helper function
 def parseCSV(filepath):
-	with open(filepath, newline='\n') as rows:
+	with open(filepath, newline='\n', errors='ignore') as rows:
 		data = {}   
 		headers = rows.readline().split(',')
 		# Get headers

@@ -15,23 +15,23 @@ def avg_per_cat():
 
 	response = {}
 	names = {}
-	categories = list(set(urls.global_data['category_id']))
+	categories = list(set(urls.global_data_US['category_id']))
 	for cat in categories:
 		name = categories_to_names(cat)
 		names[cat] = name
 		response[name] = {'likes': [0, 0], 'dislikes': [0, 0], 'views': [0, 0]}
 
-	for i, value in enumerate(urls.global_data['category_id']):
+	for i, value in enumerate(urls.global_data_US['category_id']):
 		if value:
 			#name = categories_to_names(value)
-			if urls.global_data['likes'][i]:
-				response[names[value]]['likes'][0] += int(urls.global_data['likes'][i])
+			if urls.global_data_US['likes'][i]:
+				response[names[value]]['likes'][0] += int(urls.global_data_US['likes'][i])
 				response[names[value]]['likes'][1] += 1
-			if urls.global_data['dislikes'][i]:
-				response[names[value]]['dislikes'][0] += int(urls.global_data['dislikes'][i])
+			if urls.global_data_US['dislikes'][i]:
+				response[names[value]]['dislikes'][0] += int(urls.global_data_US['dislikes'][i])
 				response[names[value]]['dislikes'][1] += 1
-			if urls.global_data['views'][i]:
-				response[names[value]]['views'][0] += int(urls.global_data['views'][i])
+			if urls.global_data_US['views'][i]:
+				response[names[value]]['views'][0] += int(urls.global_data_US['views'][i])
 				response[names[value]]['views'][1] += 1
 
 	analyze_this = {}
@@ -47,8 +47,8 @@ def avg_per_cat():
 
 def top_20_most_liked():
 	# Create two lists: one for the keys, and one for the values
-	list_titles = list(urls.global_data['title'])
-	list_likes = list(urls.global_data['likes'])
+	list_titles = list(urls.global_data_US['title'])
+	list_likes = list(urls.global_data_US['likes'])
 
 	# Create an empty dictionary for the above two lists
 	twentyMostLiked = {}
@@ -57,13 +57,6 @@ def top_20_most_liked():
 	# Convert the likes list values into integers
 	for i in range(0, len(list_likes)):
 		list_likes[i] = int(list_likes[i])
-
-	# One way of putting both lists into a dictionary file
-	'''for key in list_titles:
-		for value in list_likes:
-			twentyMostLiked[key] = value
-			list_likes.remove(value)
-			break'''
 	
 	# Another way of putting both lists into a dictionary file
 	twentyMostLiked = {list_titles[i]: list_likes[i] for i in range(len(list_titles))}
@@ -74,13 +67,10 @@ def top_20_most_liked():
 
 	return top20mostliked
 
-# filepath = '/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/USvideos.csv'
-# avg_per_cat(filepath)
-
 def top_20_most_disliked():
 	# Create two lists: one for the keys, and one for the values
-	list_titles = list(urls.global_data['title'])
-	list_dislikes = list(urls.global_data['dislikes'])
+	list_titles = list(urls.global_data_US['title'])
+	list_dislikes = list(urls.global_data_US['dislikes'])
 
 	# Create an empty dictionary for the above two lists
 	twentyMostDisliked = {}
@@ -89,13 +79,6 @@ def top_20_most_disliked():
 	# Convert the dislikes list values into integers
 	for i in range(0, len(list_dislikes)):
 		list_dislikes[i] = int(list_dislikes[i])
-
-	# One way of putting both lists into a dictionary file
-	'''for key in list_titles:
-		for value in list_dislikes:
-			twentyMostDisliked[key] = value
-			list_dislikes.remove(value)
-			break'''
 	
 	# Another way of putting both lists into a dictionary file
 	twentyMostDisliked = {list_titles[i]: list_dislikes[i] for i in range(len(list_titles))}
@@ -105,6 +88,61 @@ def top_20_most_disliked():
 	top20mostdisliked = dict(k.most_common(20))
 
 	return top20mostdisliked
+
+def disabled(num):
+	if num == 1:
+		thisDict = {}
+		thisDict = disabled_comments()
+		return thisDict
+	else:
+		thatDict = {}
+		thatDict = disabled_ratings()
+		return thatDict
+
+def disabled_comments():
+	disabled_comments_US = 0
+	disabled_comments_CA = 0
+
+	# Disabled comments sections for each country
+	# Append the status of all comments sections for each country into their own list
+	list_disabled_comments_US = list(urls.global_data_US['comments_disabled'])
+	list_disabled_comments_CA = list(urls.global_data_CA['comments_disabled'])
+
+	# Loop through all the videos with disabled comments
+	# For every instance of a video with a disabled comments section, increment a counter
+	# United States
+	for i in range(0, len(list_disabled_comments_US)):
+		if list_disabled_comments_US[i] == 'True':
+			disabled_comments_US += 1
+	#Canada
+	for i in range(0, len(list_disabled_comments_CA)):
+		if list_disabled_comments_CA[i] == 'True':
+			disabled_comments_CA += 1
+
+	all_disabled_comments_vids = { 'US' : disabled_comments_US, 'CA' : disabled_comments_CA }
+
+	# Sort dictionary from most comments-disabled videos to least
+	all_disabled_comments_vids = Counter(all_disabled_comments_vids)
+	return all_disabled_comments_vids
+
+def disabled_ratings():
+	disabled_ratings_US = 0
+	disabled_ratings_CA = 0
+
+	list_disabled_ratings_US = list(urls.global_data_US['ratings_disabled'])
+	list_disabled_ratings_CA = list(urls.global_data_CA['ratings_disabled'])
+
+	for i in range(0, len(list_disabled_ratings_US)):
+		if list_disabled_ratings_US[i] == 'True':
+			disabled_ratings_US += 1
+
+	for i in range(0, len(list_disabled_ratings_CA)):
+		if list_disabled_ratings_CA[i] == 'True':
+			disabled_ratings_CA += 1
+
+	all_disabled_ratings_vids = { 'US' : disabled_ratings_US, 'CA' : disabled_ratings_CA }
+	all_disabled_ratings_vids = Counter(all_disabled_ratings_vids)
+	return all_disabled_ratings_vids
 
 # filepath = '/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/USvideos.csv'
 # avg_per_cat(filepath)
