@@ -21,7 +21,7 @@ COUNTRIES = [
 
 
 
-class countryForm(forms.Form):
+class countriesForm(forms.Form):
 	country = forms.CharField(required=True, label='Country')
 	channel_title = forms.CharField(required=False, label='Channel name:')
 	video_id = forms.CharField(required=False, label='Video ID:')
