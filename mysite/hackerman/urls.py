@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from client import helpers
 
-global_data = helpers.loadCSV('/mnt/d/Documents/UC-Riverside/Fall-2020/CS180/Class-Projects/cs180project-021-hackerman/mysite/client/data/USvideos.csv')
+original_files = ['US', 'MX', 'GB', 'DE', 'CA', 'FR', 'RU', 'KR', 'JP', 'IN']
+global_data = helpers.loadCSV('/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/USvideos.csv')
 
 urlpatterns = [
     path('', include('client.urls')),

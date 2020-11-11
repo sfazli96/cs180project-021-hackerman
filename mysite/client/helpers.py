@@ -3,6 +3,7 @@ from hackerman import urls
 
 def loadCSV(filepath):
 	# Load up CSV so that it's available to all
+	print('Loading up CSV files...')
 	return parseCSV(filepath)
 
 # Parse CSV files with these helper function
@@ -37,9 +38,11 @@ def parseCSV(filepath):
 			data['comments_disabled'].append(row[12])
 			data['ratings_disabled'].append(row[13])
 			data['video_error_or_removed'].append(row[14])
-			data['description'].append(row[15])
+			if row[15]:
+				data['description'].append(row[15])
+			else:
+				data['description'].append('')
 		rows.close()
-	print(len(data['likes']))
 	return data
 
 def parseLine(line):
@@ -48,9 +51,11 @@ def parseLine(line):
 	tags = False
 	cell = ''
 	i = 0
+	#print('_________________ NEW LINE HERE _____________')
 	while (i < len(line)):
 		if tags and line[i]==',':
 			tags = False
+			#print(cell, '|||||||||||')
 			parsedLine.append(cell)
 			cell = ''
 		elif tags:
@@ -58,9 +63,11 @@ def parseLine(line):
 		elif line[i]=='"' and quotes:
 			quotes = False
 			if i == len(line)-3:
+				#print(cell, '|||||||||||')
 				parsedLine.append(cell)
 				cell = ''
 			elif i == len(line)-2:
+				#print(cell, '|||||||||||')
 				parsedLine.append('')
 		elif quotes:
 			cell += line[i]
@@ -69,12 +76,14 @@ def parseLine(line):
 		elif line[i]==',':
 			# Grab index of this substring
 			if line.find('000Z') == (i-4):
+				#print(cell, '|||||||||||')
 				parsedLine.append(cell)
 				cell = ''
 				tags = True
 			elif tags:
 				tags = False
 			else:
+				#print(cell, '|||||||||||')
 				parsedLine.append(cell)
 				cell = ''
 		else:
@@ -82,8 +91,11 @@ def parseLine(line):
 		i+=1
 	# if len(parsedLine) > 16 or len(parsedLine) < 16:
 	# 	print('Somet fucked')
-
+	#print(len(parsedLine))
 	return parsedLine;
+
+
+
 
 def searchCSV(query):
 	# Send in data as dictionary from POST

@@ -4,7 +4,7 @@ import json
 from collections import Counter
 
 def categories_to_names(category):
-	with open('/mnt/d/Documents/UC-Riverside/Fall-2020/CS180/Class-Projects/cs180project-021-hackerman/mysite/client/data/US_category_id.json') as f:
+	with open('/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/US_category_id.json') as f:
 		category_names = json.load(f)
 	for item in category_names['items']:
 		if category == item['id']:

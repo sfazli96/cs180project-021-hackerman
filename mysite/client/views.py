@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from .forms import USForm
+from .forms import USForm, countriesForm
 from .helpers import *
 from .analytics import *
 from plotly.offline import plot
@@ -50,6 +50,48 @@ class UnitedStatesView(View):
 
 		return render(request, self.template_name, context)
 
+class CountriesView(View):
+    template_name = 'countries.html'
+    form = countriesForm
+
+    def get(self, request):
+        data = {}
+        context = {}
+        form = countriesForm()
+        #print(global_data)
+        data['country'] = request.GET.get('country')
+        data['channel_title'] = request.GET.get('channel_title')
+        data['video_id'] = request.GET.get('video_id')
+        data['publish_time'] = request.GET.get('publish_time')
+        data['category_id'] = request.GET.get('category_id')
+        data['tags'] = request.GET.get('tags')
+        if request.GET.get('channel_title'):
+            search = searchCountries(data)
+            context['search'] = search
+            #print(search)
+        context['form'] = form
+        context['data'] = data
+        return render(request, self.template_name, context)
+
+    # EXAMPLE OF POST
+    def post(self, request):
+        data = {}
+        form = countriesForm(request.POST)
+        submitbutton = request.POST.get('Submit')
+        if form.is_valid():
+            data['country'] = form.cleaned_data.get('country')
+            data['video_id'] = form.cleaned_data.get('video_id')
+            data['channel_title'] = form.cleaned_data.get('channel_title')
+            data['publish_date'] = form.cleaned_data.get('publish_date')
+            data['category_id'] = form.cleaned_data.get('category_id')
+            data['tags'] = form.cleaned_data.get('tags')
+            
+            # Call helper functions depending on button pressed
+            # Such as if submitbutton or if insert
+        context = {'form': form, 'data': data, 'submitbutton': submitbutton}
+        return render(request, self.template_name, context)
+
+
 def averagePerCategory(request):
 	context = {}
 	avg_per = avg_per_cat()
@@ -58,9 +100,9 @@ def averagePerCategory(request):
 	avg_likes = [avg_per[cat]['avg_likes'] for cat in categories]
 	avg_dislikes = [avg_per[cat]['avg_dislikes'] for cat in categories]
 	avg_views = [avg_per[cat]['avg_views'] for cat in categories]
-	likes_fig = go.Figure(data=[go.Bar(x=categories, y=avg_likes)], layout=go.Layout(title='Average Likes Per Category in the USA', yaxis={'title': 'Likes'}, xaxis={'title': 'Categories'}))
-	dislikes_fig = go.Figure(data=[go.Bar(x=categories, y=avg_dislikes)], layout=go.Layout(title='Average Dislikes Per Category in the USA', yaxis={'title': 'Dislikes'}, xaxis={'title': 'Categories'}))
-	views_fig = go.Figure(data=[go.Bar(x=categories, y=avg_views)], layout=go.Layout(title='Average Views Per Category in the USA', yaxis={'title': 'Views'}, xaxis={'title': 'Categories'}))
+	likes_fig = go.Figure(data=[go.Bar(x=categories, y=avg_likes)], layout=go.Layout(width=800, height=450, title='Average Likes Per Category in the USA', yaxis={'title': 'Likes'}, xaxis={'title': 'Categories'}))
+	dislikes_fig = go.Figure(data=[go.Bar(x=categories, y=avg_dislikes)], layout=go.Layout(width=800, height=450, title='Average Dislikes Per Category in the USA', yaxis={'title': 'Dislikes'}, xaxis={'title': 'Categories'}))
+	views_fig = go.Figure(data=[go.Bar(x=categories, y=avg_views)], layout=go.Layout(width=800, height=450, title='Average Views Per Category in the USA', yaxis={'title': 'Views'}, xaxis={'title': 'Categories'}))
 	likes_div = plot(figure_or_data=likes_fig, output_type='div')
 	dislikes_div = plot(figure_or_data=dislikes_fig, output_type='div')
 	views_div = plot(figure_or_data=views_fig, output_type='div')
