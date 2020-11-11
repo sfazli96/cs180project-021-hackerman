@@ -7,16 +7,6 @@
 		<form method="GET">
 			{{ form.as_p }}
 			{% csrf_token %}
-			<button 
-			style="background-color:#17a2b8; color:white;width: 75px;height: 40px; border-radius: 25px; border: none" onclick="location.href='http://127.0.0.1:8000/'" type="button">
-         		Home
-         	</button value="Submit">
-			<input type="submit" style="border-radius: 25px" class="btn btn-info" value="Submit">
-			<!---<input type="button" value="Go back!" onclick="history.back()">   --->
-		</form>
-		{% if data.channel_title == None %}
-		{% else %}
-		<h1>These are the results for {{data.channel_title}}</h1>
 			<input type="submit" class="btn btn-info" value="Submit">
 			<a href="{% url 'home' %}">Go back to home page</a>
 			<!--<input type="button" value="Go back!" onclick="history.back()">   -->
@@ -52,5 +42,4 @@
 		</table>
 		{% endif %}
 	</div>
-	{% endif %}
 {% endblock %}
