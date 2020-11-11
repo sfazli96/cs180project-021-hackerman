@@ -8,18 +8,11 @@ class USForm(forms.Form):
 	tags = forms.CharField(required=False, label='Tags:')
 
 COUNTRIES = [
-  ('great britain', 'Great Britain'),
-  ('russia', 'Russia'),
-  ('japan', 'Japan'),
-  ('canada', 'Canada'),
-  ('france', 'France'),
-  ('india', 'India'),
-  ('south korea', 'South Korea'),
-  ('mexico', 'Mexico'),
-  {'germany', 'Germany'},
+  ('GB', 'Great Britain'),
+  ('CA', 'Canada'),
+  ('DE', 'Germany'),
+  ('US', 'United States')
 ]
-
-
 
 class countriesForm(forms.Form):
 	country = forms.CharField(required=True, label='Country')
@@ -29,7 +22,3 @@ class countriesForm(forms.Form):
 	category_id = forms.IntegerField(required=False, label='Category ID:')
 	tags = forms.CharField(required=False, label='Tags:')
 	country= forms.CharField(label='Choose a country', widget=forms.Select(choices=COUNTRIES))
-
-
-	
-

@@ -1,11 +1,19 @@
 {% extends "base.html" %}
 
 {% block page_content %}
-	<div class='container'>
-		<h1>Top 20 Most Disliked Videos</h1>
-		<!-- CHARTS GO HERE -->
-        {% autoescape off %}
-        {{mostDislikedDiv}}
-		{% endautoescape %}
-	</div>
+<div class='container'>
+	<h1>Top 20 Most Disliked Videos</h1>
+	<!-- CHARTS GO HERE -->
+	{% autoescape off %}
+	{{mostDislikedDiv}}
+	{% endautoescape %}
+</div>
+<div style="margin-top: 150px; margin-left: 300px; margin-right: 300px; margin-bottom: 50px; border: 3px; border-style: solid; border-color: #000000; padding: 1em;">
+	<h10>
+		Average Number of Dislikes
+	</h10>
+	<h1>
+		{{averageMostDislikes}}
+	</h1>
+</div>
 {% endblock %}

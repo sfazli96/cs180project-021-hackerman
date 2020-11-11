@@ -40,9 +40,12 @@
       </span>Top 20 Most Liked videos</a>
         <a class="dropdown-item" href="top_20_most_disliked"> 
           <span style="font-size: 25px; color: Red;">
-        <i class="fas fa-thumbs-down"></i>
-      </span>Top 20 Most Disliked videos</a>
-        <a class="dropdown-item" href="avg_per_cat">Average Per Category(US)</a>
+        <i class="fas fa-thumbs-down"></i> 
+      </span>Top 20 Most Disliked videos</a> 
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <a class="dropdown-item" href="{% url 'top20MostLiked' %}">Top 20 Most Liked videos</a>
+        <a class="dropdown-item" href="{% url 'top20MostDisliked' %}">Top 20 Most Disliked videos</a>
+        <a class="dropdown-item" href="{% url 'avgPerCat' %}">Average Per Category(US)</a>
      </div>
         <div class="clear"></div>
     </div>
