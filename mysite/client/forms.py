@@ -8,15 +8,10 @@ class USForm(forms.Form):
 	tags = forms.CharField(required=False, label='Tags:')
 
 COUNTRIES = [
-  ('great britain', 'Great Britain'),
-  ('russia', 'Russia'),
-  ('japan', 'Japan'),
-  ('canada', 'Canada'),
-  ('france', 'France'),
-  ('india', 'India'),
-  ('south korea', 'South Korea'),
-  ('mexico', 'Mexico'),
-  {'germany', 'Germany'},
+  ('GB', 'Great Britain'),
+  ('CA', 'Canada'),
+  ('DE', 'Germany'),
+  ('US', 'United States')
 ]
 
 class countriesForm(forms.Form):

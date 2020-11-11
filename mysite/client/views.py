@@ -25,7 +25,7 @@ class UnitedStatesView(View):
 		data['category_id'] = request.GET.get('category_id')
 		data['tags'] = request.GET.get('tags')
 		if request.GET.get('channel_title'):
-			search = searchCSV(data)
+			search = searchCSV(data, 'US')
 			context['search'] = search
 			#print(search)
 		context['form'] = form
@@ -51,45 +51,46 @@ class UnitedStatesView(View):
 		return render(request, self.template_name, context)
 
 class CountriesView(View):
-    template_name = 'countries.html'
-    form = countriesForm
+	template_name = 'countries.html'
+	form = countriesForm
 
-    def get(self, request):
-        data = {}
-        context = {}
-        form = countriesForm()
-        #print(global_data)
-        data['country'] = request.GET.get('country')
-        data['channel_title'] = request.GET.get('channel_title')
-        data['video_id'] = request.GET.get('video_id')
-        data['publish_time'] = request.GET.get('publish_time')
-        data['category_id'] = request.GET.get('category_id')
-        data['tags'] = request.GET.get('tags')
-        if request.GET.get('channel_title'):
-            search = searchCountries(data)
-            context['search'] = search
-            #print(search)
-        context['form'] = form
-        context['data'] = data
-        return render(request, self.template_name, context)
+	def get(self, request):
+		data = {}
+		context = {}
+		form = countriesForm()
+		#print(global_data)
+		data['country'] = request.GET.get('country')
+		data['channel_title'] = request.GET.get('channel_title')
+		data['video_id'] = request.GET.get('video_id')
+		data['publish_time'] = request.GET.get('publish_time')
+		data['category_id'] = request.GET.get('category_id')
+		data['tags'] = request.GET.get('tags')
+		if request.GET.get('channel_title'):
+			print(data['country'])
+			search = searchCSV(data, data['country'])
+			context['search'] = search
+		#print(search)
+		context['form'] = form
+		context['data'] = data
+		return render(request, self.template_name, context)
 
-    # EXAMPLE OF POST
-    def post(self, request):
-        data = {}
-        form = countriesForm(request.POST)
-        submitbutton = request.POST.get('Submit')
-        if form.is_valid():
-            data['country'] = form.cleaned_data.get('country')
-            data['video_id'] = form.cleaned_data.get('video_id')
-            data['channel_title'] = form.cleaned_data.get('channel_title')
-            data['publish_date'] = form.cleaned_data.get('publish_date')
-            data['category_id'] = form.cleaned_data.get('category_id')
-            data['tags'] = form.cleaned_data.get('tags')
-            
-            # Call helper functions depending on button pressed
-            # Such as if submitbutton or if insert
-        context = {'form': form, 'data': data, 'submitbutton': submitbutton}
-        return render(request, self.template_name, context)
+	# EXAMPLE OF POST
+	def post(self, request):
+		data = {}
+		form = countriesForm(request.POST)
+		submitbutton = request.POST.get('Submit')
+		if form.is_valid():
+			data['country'] = form.cleaned_data.get('country')
+			data['video_id'] = form.cleaned_data.get('video_id')
+			data['channel_title'] = form.cleaned_data.get('channel_title')
+			data['publish_date'] = form.cleaned_data.get('publish_date')
+			data['category_id'] = form.cleaned_data.get('category_id')
+			data['tags'] = form.cleaned_data.get('tags')
+
+		# Call helper functions depending on button pressed
+		# Such as if submitbutton or if insert
+		context = {'form': form, 'data': data, 'submitbutton': submitbutton}
+		return render(request, self.template_name, context)
 
 
 def averagePerCategory(request):
