@@ -17,7 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from client import helpers
 
+# Countries get passed in on startup
 countries = ['US', 'GB', 'DE', 'CA']
+
+# Data gets loaded up immediately.
 global_data = helpers.loadCSV(countries)
 
 urlpatterns = [

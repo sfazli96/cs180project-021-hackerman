@@ -16,12 +16,7 @@ def parseCSV(filepath):
 	with open(filepath, newline='\n') as rows:
 		data = {}   
 		headers = rows.readline().split(',')
-		# Get headers
-		#print(len(headers))
-		# for header in headers:
-		# 	header = header.split('\r\n')
-		# 	#print(header[0])
-		# 	data[header[0]] = []
+
 		data['video_id'] = []
 		data['trending_date'] = []
 		data['title'] = []
@@ -159,3 +154,16 @@ def searchCSV(query, country):
 		response['comment_count'].append(urls.global_data[country]['comment_count'][index])
 
 	return response
+
+def parseDate(date):
+	split_date = date.split('T')
+
+	print(split_date)
+	new_date = split_date[0][2:].replace('-', '.')
+	print(new_date)
+	month = new_date[3:5]
+	day = new_date[6:8]
+	print(month, day)
+	new_date = new_date.replace(month, day)
+	new_date = new_date.replace(day, month)
+	print(new_date)
