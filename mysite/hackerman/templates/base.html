@@ -1,40 +1,47 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{% url 'home' %}">Trending Youtube Stats</a>
+  <span style="font-size: 2em; color: Tomato;">
+    <i class="fab fa-youtube"></i>
+  </span>
+  <a class="navbar-brand" href="{% url 'home' %}">Trending Youtube</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
+    <span style="font-size: 1em; color: Red;">
+    <i class="fas fa-flag-usa"></i>
+  </span>
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'US' %}">By United States</a>
+        <a class="nav-link" href="{% url 'US' %}">United States</a>
       </li>
+        <span style="font-size: 1em; color: Blue;">
+          <i class="fas fa-globe"></i></a>
+        </span>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'countries' %}">By Countries</a>
+        <a class="nav-link" href="{% url 'countries' %}">Countries</a>
       </li>
       </li>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">By Category</a>
       </li>
-      <li>
-        <a class="nav-link" href="{% url 'avgPerCat' %}">Average Per Category(US)</a>
-      </li>
-      <li>
-        <a class="nav-link" href="{% url 'top20MostLiked' %}">Top 20 Most Liked Videos(US)</a>
-      </li>
-      <li>
-        <a class="nav-link" href="{% url 'top20MostDisliked' %}">Top 20 Most Disliked Videos(US)</a>
-      </li>
       <div class="dropdown">
       <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Analytics
       </a>
-
+      <i class="fas fa-analytics"></i>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" href="top_20_most_liked">Top 20 Most Liked videos</a>
-        <a class="dropdown-item" href="top_20_most_disliked">Top 20 Most Disliked videos</a>
+        <a class="dropdown-item" href="top_20_most_liked"> 
+          <span style="font-size: 25px; color: Blue;">
+        <i class="fas fa-thumbs-up"></i>
+      </span>Top 20 Most Liked videos</a>
+        <a class="dropdown-item" href="top_20_most_disliked"> 
+          <span style="font-size: 25px; color: Red;">
+        <i class="fas fa-thumbs-down"></i>
+      </span>Top 20 Most Disliked videos</a>
         <a class="dropdown-item" href="avg_per_cat">Average Per Category(US)</a>
      </div>
         <div class="clear"></div>
@@ -53,3 +60,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+

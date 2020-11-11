@@ -1,8 +1,16 @@
 {% extends "base.html" %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+<i class="fab fa-youtube"></i>
 {% load static %}
 {% block page_content %}
 	<div class='container'>
-		<h1>HOME</h1>
-		<img src="{% static 'mysite/images/Youtube.jpg' %}">
+		<h1 style="text-align: center; font-size: 400%; font-family: Palatino Linotype, Palatino, serif; line-height: 4.5em;">Welcome to Youtube Trending Statistic</h1>
+		<body style="background-image: linear-gradient(to right, #1A81A5 , #7D1AA5);">
+			<h2 style="text-align: center; font-size: 150%; font-family: Palatino Linotype, Palatino, serif;">This is our website which allows you to find youtube statistics</h2>
+			<h3 style="text-align: center; font-size: 150%; font-family: Palatino Linotype, Palatino, serif;">CS180 - Hackerman</h3>
+			<button style="background-color:#350B0B; position:relative; left: 350px; color:white; width: 200px;height: 40px; border-radius: 28px; border: none" onclick="location.href='https://www.kaggle.com/datasnaek/youtube-new'" type="button">
+         		Data</button value="Submit">
+         	<button style="background-color:#350B0B; position:relative; left: 400px; color:white; width: 200px;height: 40px; border-radius: 28px; border: none" onclick="location.href='https://www.kaggle.com/datasnaek/youtube-new'" type="button"> <i class="fab fa-github-alt"></i>
+         		Github</button value="Submit">
 	</div>
 {% endblock %}
