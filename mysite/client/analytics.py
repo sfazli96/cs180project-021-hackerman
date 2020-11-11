@@ -4,7 +4,7 @@ import json
 from collections import Counter
 
 def categories_to_names(category, country):
-	with open('/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/{}_category_id.json'.format(country)) as f:
+	with open('/mnt/d/Documents/UC-Riverside/Fall-2020/CS180/Class-Projects/cs180project-021-hackerman/mysite/client/data/{}_category_id.json'.format(country)) as f:
 		category_names = json.load(f)
 	for item in category_names['items']:
 		if category == item['id']:
@@ -15,29 +15,12 @@ def avg_per_cat():
 
 	response = {}
 	names = {}
-<<<<<<< HEAD
-	categories = list(set(urls.global_data_US['category_id']))
-=======
 	categories = list(set(urls.global_data['US']['category_id']))
->>>>>>> origin/main
 	for cat in categories:
 		name = categories_to_names(cat, 'US')
 		names[cat] = name
 		response[name] = {'likes': [0, 0], 'dislikes': [0, 0], 'views': [0, 0]}
 
-<<<<<<< HEAD
-	for i, value in enumerate(urls.global_data_US['category_id']):
-		if value:
-			#name = categories_to_names(value)
-			if urls.global_data_US['likes'][i]:
-				response[names[value]]['likes'][0] += int(urls.global_data_US['likes'][i])
-				response[names[value]]['likes'][1] += 1
-			if urls.global_data_US['dislikes'][i]:
-				response[names[value]]['dislikes'][0] += int(urls.global_data_US['dislikes'][i])
-				response[names[value]]['dislikes'][1] += 1
-			if urls.global_data_US['views'][i]:
-				response[names[value]]['views'][0] += int(urls.global_data_US['views'][i])
-=======
 	for i, value in enumerate(urls.global_data['US']['category_id']):
 		if value:
 			#name = categories_to_names(value)
@@ -49,7 +32,6 @@ def avg_per_cat():
 				response[names[value]]['dislikes'][1] += 1
 			if urls.global_data['US']['views'][i]:
 				response[names[value]]['views'][0] += int(urls.global_data['US']['views'][i])
->>>>>>> origin/main
 				response[names[value]]['views'][1] += 1
 
 	analyze_this = {}
@@ -65,13 +47,8 @@ def avg_per_cat():
 
 def top_20_most_liked():
 	# Create two lists: one for the keys, and one for the values
-<<<<<<< HEAD
-	list_titles = list(urls.global_data_US['title'])
-	list_likes = list(urls.global_data_US['likes'])
-=======
 	list_titles = list(urls.global_data['US']['title'])
 	list_likes = list(urls.global_data['US']['likes'])
->>>>>>> origin/main
 
 	# Create an empty dictionary for the above two lists
 	twentyMostLiked = {}
@@ -128,8 +105,8 @@ def disabled_comments():
 
 	# Disabled comments sections for each country
 	# Append the status of all comments sections for each country into their own list
-	list_disabled_comments_US = list(urls.global_data_US['comments_disabled'])
-	list_disabled_comments_CA = list(urls.global_data_CA['comments_disabled'])
+	list_disabled_comments_US = list(urls.global_data['US']['comments_disabled'])
+	list_disabled_comments_CA = list(urls.global_data['CA']['comments_disabled'])
 
 	# Loop through all the videos with disabled comments
 	# For every instance of a video with a disabled comments section, increment a counter
@@ -152,8 +129,8 @@ def disabled_ratings():
 	disabled_ratings_US = 0
 	disabled_ratings_CA = 0
 
-	list_disabled_ratings_US = list(urls.global_data_US['ratings_disabled'])
-	list_disabled_ratings_CA = list(urls.global_data_CA['ratings_disabled'])
+	list_disabled_ratings_US = list(urls.global_data['US']['ratings_disabled'])
+	list_disabled_ratings_CA = list(urls.global_data['CA']['ratings_disabled'])
 
 	for i in range(0, len(list_disabled_ratings_US)):
 		if list_disabled_ratings_US[i] == 'True':
