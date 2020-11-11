@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+	<div class='container'>
+		<h1>Trending videos on Youtube in Countries</h1>
+		<!-- FORM GOES HERE -->
+		<form method="GET">
+			{{ form.as_p }}
+			{% csrf_token %}
+			<input type="submit" class="btn btn-info" value="Submit">
+			<a href="{% url 'home' %}">Go back to home page</a>
+			<!--<input type="button" value="Go back!" onclick="history.back()">   -->
+		</form>
+		{% if data.channel_title == None %}
+		{% else %}
+		<h1>These are the results for {{data.channel_title}} in {{data.country}}</h1>
+		<table class="table" style="border-collapse: collapse;">
+			<thead class="thead-dark">
+			<tr>
+				<th> Video ID </th>
+				<th> Channel Title </th>
+				<th> Publish Time </th>
+				<th> Category ID </th>
+				<th> Trending Date </th>
+				<th> View Count </th>
+				<th> Likes </th>
+				<th> Dislikes </th>
+				<th> Comment Count </th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr style="border: none">
+			{% for value in search.values %}
+				<td style="border-right: solid 1px black; border-left: solid 1px black;">
+				{% for v in value %}
+					{{ v }}<br>
+				{% endfor %}
+				</td>
+			{% endfor %}
+			</tr>
+			</tbody>
+		</table>
+		{% endif %}
+	</div>
+{% endblock %}

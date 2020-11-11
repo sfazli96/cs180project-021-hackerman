@@ -3,8 +3,8 @@ from hackerman import urls
 import json
 from collections import Counter
 
-def categories_to_names(category):
-	with open('/mnt/d/Documents/UC-Riverside/Fall-2020/CS180/Class-Projects/cs180project-021-hackerman/mysite/client/data/US_category_id.json') as f:
+def categories_to_names(category, country):
+	with open('/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/{}_category_id.json'.format(country)) as f:
 		category_names = json.load(f)
 	for item in category_names['items']:
 		if category == item['id']:
@@ -15,12 +15,17 @@ def avg_per_cat():
 
 	response = {}
 	names = {}
+<<<<<<< HEAD
 	categories = list(set(urls.global_data_US['category_id']))
+=======
+	categories = list(set(urls.global_data['US']['category_id']))
+>>>>>>> origin/main
 	for cat in categories:
-		name = categories_to_names(cat)
+		name = categories_to_names(cat, 'US')
 		names[cat] = name
 		response[name] = {'likes': [0, 0], 'dislikes': [0, 0], 'views': [0, 0]}
 
+<<<<<<< HEAD
 	for i, value in enumerate(urls.global_data_US['category_id']):
 		if value:
 			#name = categories_to_names(value)
@@ -32,6 +37,19 @@ def avg_per_cat():
 				response[names[value]]['dislikes'][1] += 1
 			if urls.global_data_US['views'][i]:
 				response[names[value]]['views'][0] += int(urls.global_data_US['views'][i])
+=======
+	for i, value in enumerate(urls.global_data['US']['category_id']):
+		if value:
+			#name = categories_to_names(value)
+			if urls.global_data['US']['likes'][i]:
+				response[names[value]]['likes'][0] += int(urls.global_data['US']['likes'][i])
+				response[names[value]]['likes'][1] += 1
+			if urls.global_data['US']['dislikes'][i]:
+				response[names[value]]['dislikes'][0] += int(urls.global_data['US']['dislikes'][i])
+				response[names[value]]['dislikes'][1] += 1
+			if urls.global_data['US']['views'][i]:
+				response[names[value]]['views'][0] += int(urls.global_data['US']['views'][i])
+>>>>>>> origin/main
 				response[names[value]]['views'][1] += 1
 
 	analyze_this = {}
@@ -47,8 +65,13 @@ def avg_per_cat():
 
 def top_20_most_liked():
 	# Create two lists: one for the keys, and one for the values
+<<<<<<< HEAD
 	list_titles = list(urls.global_data_US['title'])
 	list_likes = list(urls.global_data_US['likes'])
+=======
+	list_titles = list(urls.global_data['US']['title'])
+	list_likes = list(urls.global_data['US']['likes'])
+>>>>>>> origin/main
 
 	# Create an empty dictionary for the above two lists
 	twentyMostLiked = {}
@@ -69,8 +92,8 @@ def top_20_most_liked():
 
 def top_20_most_disliked():
 	# Create two lists: one for the keys, and one for the values
-	list_titles = list(urls.global_data_US['title'])
-	list_dislikes = list(urls.global_data_US['dislikes'])
+	list_titles = list(urls.global_data['US']['title'])
+	list_dislikes = list(urls.global_data['US']['dislikes'])
 
 	# Create an empty dictionary for the above two lists
 	twentyMostDisliked = {}
