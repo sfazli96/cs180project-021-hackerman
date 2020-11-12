@@ -167,3 +167,14 @@ def top20MostDisliked(request):
 	context['averageMostDislikes'] = average_most_dislikes
 
 	return render(request, 'top20MostDisliked.html', context)
+
+def mostPopularCategory(request):
+    context = {}
+    most_popular = most_popular_categories()
+
+    categories = list(most_popular.keys())
+    video_views = [most_popular[cat]['video_views'] for cat in categories]
+    views_fig = go.Figure(data=[go.Bar(x=categories, y=video_views)], layout=go.Layout(width=800, height=450, title='Most Popular Per Category in the USA', yaxis={'title': 'Views'}, xaxis={'title': 'Categories'}))
+    viewsDiv = plot(figure_or_data=views_fig, output_type='div')
+    context['viewsDiv'] = viewsDiv
+    return render(request, 'mostPopularCategory.html', context) 

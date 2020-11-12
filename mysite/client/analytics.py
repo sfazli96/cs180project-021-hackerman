@@ -2,7 +2,7 @@ from .helpers import *
 from hackerman import urls
 import json
 from collections import Counter
-#, 'GB', 'DE', 'CA'
+# , 'GB', 'DE', 'CA'
 # countries = ['US']
 # global_data = loadCSV(countries)
 
@@ -12,7 +12,7 @@ from collections import Counter
 def categories_to_names(category, country):
 	# Open json file specific to the country csv file.
 	# The {} in the file name gets replaced with 'US' or 'GB', etc
-	with open('/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/{}_category_id.json'.format(country)) as f:
+	with open('/mnt/d/Documents/UC-Riverside/Fall-2020/CS180/Class-Projects/cs180project-021-hackerman/mysite/client/data/{}_category_id.json'.format(country)) as f:
 		# category_names is dictionary now
 		category_names = json.load(f)
 
@@ -26,6 +26,8 @@ def categories_to_names(category, country):
 			return item['snippet']['title']
 
 # Average likes, dislikes and views per category for the USA.
+
+
 def avg_per_cat():
 
 	# Create empty dictionaries for data we want
@@ -56,13 +58,16 @@ def avg_per_cat():
 			# If the likes entry exists and is not null
 			if urls.global_data['US']['likes'][i]:
 				# Then record the data into the response dictionary
-				response[names[value]]['likes'][0] += int(urls.global_data['US']['likes'][i])
+				response[names[value]
+				    ]['likes'][0] += int(urls.global_data['US']['likes'][i])
 				response[names[value]]['likes'][1] += 1
 			if urls.global_data['US']['dislikes'][i]:
-				response[names[value]]['dislikes'][0] += int(urls.global_data['US']['dislikes'][i])
+				response[names[value]
+				    ]['dislikes'][0] += int(urls.global_data['US']['dislikes'][i])
 				response[names[value]]['dislikes'][1] += 1
 			if urls.global_data['US']['views'][i]:
-				response[names[value]]['views'][0] += int(urls.global_data['US']['views'][i])
+				response[names[value]
+				    ]['views'][0] += int(urls.global_data['US']['views'][i])
 				response[names[value]]['views'][1] += 1
 
 	# This dictionary will hold all numbers used to plot the graph
@@ -71,13 +76,16 @@ def avg_per_cat():
 	# Go through the categories to average likes/dislikes/views
 	for cat in categories:
 		avg_likes = response[names[cat]]['likes'][0]/response[names[cat]]['likes'][1]
-		avg_dislikes = response[names[cat]]['dislikes'][0]/response[names[cat]]['dislikes'][1]
+		avg_dislikes = response[names[cat]]['dislikes'][0] / \
+		    response[names[cat]]['dislikes'][1]
 		avg_views = response[names[cat]]['views'][0]/response[names[cat]]['views'][1]
 
 		# Finally set this value to each category
-		analyze_this[names[cat]] = {'avg_likes': avg_likes, 'avg_dislikes': avg_dislikes, 'avg_views': avg_views}
+		analyze_this[names[cat]] = {'avg_likes': avg_likes,
+		    'avg_dislikes': avg_dislikes, 'avg_views': avg_views}
 
 	return analyze_this
+
 
 def top_20_most_liked():
 	# Create two lists: one for the keys, and one for the values
@@ -98,9 +106,10 @@ def top_20_most_liked():
 			twentyMostLiked[key] = value
 			list_likes.remove(value)
 			break'''
-	
+
 	# Another way of putting both lists into a dictionary file
-	twentyMostLiked = {list_titles[i]: list_likes[i] for i in range(len(list_titles))}
+	twentyMostLiked = {list_titles[i]: list_likes[i]
+	    for i in range(len(list_titles))}
 
 	# Sort the dictionary from most to least likes, and then push the top 20 results into another dictionary file
 	k = Counter(twentyMostLiked)
@@ -128,15 +137,59 @@ def top_20_most_disliked():
 			twentyMostDisliked[key] = value
 			list_dislikes.remove(value)
 			break'''
-	
+
 	# Another way of putting both lists into a dictionary file
-	twentyMostDisliked = {list_titles[i]: list_dislikes[i] for i in range(len(list_titles))}
+	twentyMostDisliked = {list_titles[i]: list_dislikes[i]
+	    for i in range(len(list_titles))}
 
 	# Sort the dictionary from most to least dislikes, and then push the top 20 results into another dictionary file
 	k = Counter(twentyMostDisliked)
 	top20mostdisliked = dict(k.most_common(20))
 
 	return top20mostdisliked
+
+
+def most_popular_categories():
+	response = {}
+	names = {}
+
+	# Make list of unique category ID values
+	# categories looks liks this:
+	# categories = [1, 15, 22, 25, ...]
+	categories = list(set(urls.global_data['US']['category_id']))
+
+	# Initialize names and response dictionaries
+	for cat in categories:
+		# Convert category ID to string
+		name = categories_to_names(cat, 'US')
+
+		# names looks like:
+		# {22: 'Entertainment', 24: 'Gaming', ...}
+		names[cat] = name
+
+		# resposne looks like:
+		# {'Entertainment': {'views': [0, 0]}, ...}
+		response[name] = {'views': [0, 0]}
+
+	# Iterate through category IDs, and enumerate to have index
+	for i, value in enumerate(urls.global_data['US']['category_id']):
+		if value:
+			# If the views entry exists and is not null
+			if urls.global_data['US']['views'][i]:
+				# Then record the data into the response dictionary
+				response[names[value]]['views'][0] += int(urls.global_data['US']['views'][i])
+				response[names[value]]['views'][1] += 1
+
+	analyze_this = {}
+
+    # Go through the categories to average likes/dislikes/views
+	for cat in categories:
+		video_views = response[names[cat]]['views'][0]
+		analyze_this[names[cat]] = {'video_views' : video_views}
+
+	return analyze_this
+
+# =============================================================================================================================================================
 
 # Get various modified data on each video
 # DONT WORRY ABOUT THIS CODE:
@@ -164,4 +217,4 @@ def top_20_most_disliked():
 # 			videos[country][ID]['published_date'] = publish_time
 
 
-#video_info()
+# video_info()
