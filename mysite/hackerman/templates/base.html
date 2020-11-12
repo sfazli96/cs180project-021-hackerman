@@ -33,16 +33,14 @@
         Analytics
       </a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" href="top_20_most_liked"> 
+        <a class="dropdown-item" href="{%url 'top20MostLiked' %}"> 
           <span style="font-size: 25px; color: #00F9E9;">
         <i class="fas fa-thumbs-up"></i>
-      </span>Top 20 Most Liked videos</a>
-        <a class="dropdown-item" href="top_20_most_disliked"> 
+          </span>Top 20 Most Liked videos</a> 
+        <a class="dropdown-item" href="{%url 'top20MostDisliked' %}"> 
           <span style="font-size: 25px; color: Red;">
         <i class="fas fa-thumbs-down"></i> 
       </span>Top 20 Most Disliked videos</a> 
-        <a class="dropdown-item" href="{% url 'top20MostLiked' %}">Top 20 Most Liked videos</a>
-        <a class="dropdown-item" href="{% url 'top20MostDisliked' %}">Top 20 Most Disliked videos</a>
         <a class="dropdown-item" href="{% url 'avgPerCat' %}">Average Per Category(US)</a>
         <a class="dropdown-item" href="{% url 'disabledCommentsAndRatings' %}">Disabled Comments and Ratings</a>
         <a class="dropdown-item" href="{% url 'mostPopularCategory' %}">Most Popular Category Per Country</a>
