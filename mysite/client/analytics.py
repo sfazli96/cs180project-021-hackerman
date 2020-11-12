@@ -2,8 +2,8 @@ from .helpers import *
 from hackerman import urls
 import json
 from collections import Counter
-#, 'GB', 'DE', 'CA'
-# countries = ['US']
+#
+# countries = ['US', 'GB', 'DE', 'CA']
 # global_data = loadCSV(countries)
 
 
@@ -139,29 +139,67 @@ def top_20_most_disliked():
 	return top20mostdisliked
 
 # Get various modified data on each video
-# DONT WORRY ABOUT THIS CODE:
-# def video_info():
-# 	# Make dictionary with video_ids
-# 	videos = {}
+def video_info():
+	# Make dictionary with video_ids
+	videos = {}
 
-# 	# Iterate through every country to get comment counts and
-# 	# various other information on each video
-# 	for country in global_data.keys():
-# 		# Create empty dictionary for each country
-# 		videos[country] = {}
-# 		for index, ID in enumerate(global_data[country]['video_id']):
-# 			if index == 0:
-# 				videos[country][ID] = {}
-# 				videos[country][ID]['comment_count'] = []
-# 			# Looks like: {'US': {'28x7aysd7': {'comment_count': [123, 123, 123, ...], 'thumbnail': 'asdjwhihasd.com', ...}}}
-# 			videos[country][ID]['comment_count'].append(global_data[country]['comment_count'][index])
-# 			videos[country][ID]['thumbnail_link'] = global_data[country]['thumbnail_link'][index]
-# 			videos[country][ID]['title'] = global_data[country]['title'][index]
-# 			# Modify publish time to look like trending date
-# 			# So, from 2017-11-10T17:00:03.000Z to 17.10.11
-# 			publish_time = parseDate(global_data[country]['publish_time'][index])
-# 			break
-# 			videos[country][ID]['published_date'] = publish_time
+	# Iterate through every country to get comment counts and
+	# various other information on each video
+	for country in global_data.keys():
+		# Create empty dictionary for each country
+		# Will look like: {'US': {'28x7aysd7': {'comment_count': 123, 'thumbnail': 'https://asdjwhihasd.com', ...}}}
+		videos[country] = {}
+		for index, ID in enumerate(global_data[country]['video_id']):
+			if ID not in videos[country].keys():
+				videos[country][ID] = {}
+				videos[country][ID]['trending_dates'] = []
+
+			videos[country][ID]['comment_count'] = global_data[country]['comment_count'][index]
+			videos[country][ID]['thumbnail_link'] = global_data[country]['thumbnail_link'][index]
+			videos[country][ID]['title'] = global_data[country]['title'][index]
+
+			# Modify publish time for easier calculations
+			# Looks like (year, day, month)
+			publish_time = parseDate(global_data[country]['publish_time'][index])
+			videos[country][ID]['published_date'] = publish_time
+			videos[country][ID]['trending_dates'].append(global_data[country]['trending_date'][index])
+			videos[country][ID]['category'] = categories_to_names(global_data[country]['category_id'][index], country)
+			videos[country][ID]['likes'] = global_data[country]['likes'][index]
+			videos[country][ID]['dislikes'] = global_data[country]['dislikes'][index]
+			videos[country][ID]['views'] = global_data[country]['views'][index]
+
+	return videos
 
 
-#video_info()
+def comment_count_per_country(videos):
+	# counts looks like:
+	# {'US': {'total_comments': 1242512, 'average_comments': 5000}}
+	counts = {}
+	for country in videos.keys():
+		counts[country] = {}
+		counts[country]['total_comments'] = 0
+		counts[country]['average_comments'] = 0
+		for ID in videos[country].keys():
+			counts[country]['total_comments'] += int(videos[country][ID]['comment_count'])
+		counts[country]['average_comments'] = counts[country]['total_comments']/len(videos[country].keys())
+
+	return counts
+
+# Grab top 5 trending length videos for each country
+def trending_stats(videos):
+	# time looks like:
+	# {'US': {'18dja98s': {'trending_length': 1, 'time_to_trend': 1, 'thumbnail_link': 'https://aasidh.com'}, ...}, ...}
+	time = {}
+	for country in videos.keys():
+		time[country] = {}
+		for ID in videos[country].keys():
+			time[country][ID] = {}
+			if len(videos[country][ID]['trending_dates']) > 0:
+				time[country][ID]['trending_length'] = trendingLength(videos[country][ID]['trending_dates'])
+				time[country][ID]['time_to_trend'] = timeToTrend(videos[country][ID]['trending_dates'], videos[country][ID]['published_date'])
+				time[country][ID]['thumbnail_link'] = videos[country][ID]['thumbnail_link']
+			else:
+				time[country][ID]['trending_length'] = 0
+				time[country][ID]['time_to_trend'] = 0
+				time[country][ID]['thumbnail_link'] = ''
+	return time

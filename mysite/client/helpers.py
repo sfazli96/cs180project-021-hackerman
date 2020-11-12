@@ -1,4 +1,5 @@
 from difflib import SequenceMatcher
+from datetime import date
 from hackerman import urls
 
 def loadCSV(countries):
@@ -155,15 +156,50 @@ def searchCSV(query, country):
 
 	return response
 
+# Parse date that is in a specific format
 def parseDate(date):
 	split_date = date.split('T')
 
-	print(split_date)
-	new_date = split_date[0][2:].replace('-', '.')
-	print(new_date)
-	month = new_date[3:5]
-	day = new_date[6:8]
-	print(month, day)
-	new_date = new_date.replace(month, day)
-	new_date = new_date.replace(day, month)
-	print(new_date)
+	new_date = split_date[0][2:].split('-')
+	year = new_date[0]
+	month = new_date[1]
+	day = new_date[2]
+	return (year, day, month)
+
+# returns how many days a video was trending
+def trendingLength(dates):
+	# Get first day of trending
+	date_first = dates[0].split('.')
+	year_first = int('20' + date_first[0])
+	day_first = int(date_first[1])
+	month_first = int(date_first[2])
+
+	# Get last day of trending
+	date_last = dates[len(dates)-1].split('.')
+	year_last = int('20' + date_last[0])
+	day_last = int(date_last[1])
+	month_last = int(date_last[2])
+
+	f_date = date(year_first, month_first, day_first)
+	l_date = date(year_last, month_last, day_last)
+
+	delta = l_date-f_date
+	return delta.days+1
+
+# Return amount of days it took to trend from published
+def timeToTrend(dates, pub_date):
+	first_date = dates[0].split('.')
+	# Get first day of trending
+	year_first = int('20' + first_date[0])
+	day_first = int(first_date[1])
+	month_first = int(first_date[2])
+	l_date = date(year_first, month_first, day_first)
+
+	p_year = int('20' + pub_date[0])
+	p_day = int(pub_date[1])
+	p_month = int(pub_date[2])
+	f_date = date(p_year, p_month, p_day)
+
+	delta = l_date - f_date
+
+	return delta.days
