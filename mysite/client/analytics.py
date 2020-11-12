@@ -148,7 +148,6 @@ def top_20_most_disliked():
 
 	return top20mostdisliked
 
-
 def most_popular_categories():
 	response = {}
 	names = {}
