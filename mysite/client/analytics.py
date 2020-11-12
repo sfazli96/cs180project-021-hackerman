@@ -6,7 +6,7 @@ from collections import Counter
 # countries = ['US', 'GB', 'DE', 'CA']
 # global_data = loadCSV(countries)
 
-
+videos = video_info()
 # Changes category_id from csv to a string
 # Example: 22 -> 'Entertainment'
 def categories_to_names(category, country):
@@ -145,33 +145,33 @@ def video_info():
 
 	# Iterate through every country to get comment counts and
 	# various other information on each video
-	for country in global_data.keys():
+	for country in urls.global_data.keys():
 		# Create empty dictionary for each country
 		# Will look like: {'US': {'28x7aysd7': {'comment_count': 123, 'thumbnail': 'https://asdjwhihasd.com', ...}}}
 		videos[country] = {}
-		for index, ID in enumerate(global_data[country]['video_id']):
+		for index, ID in enumerate(urls.global_data[country]['video_id']):
 			if ID not in videos[country].keys():
 				videos[country][ID] = {}
 				videos[country][ID]['trending_dates'] = []
 
-			videos[country][ID]['comment_count'] = global_data[country]['comment_count'][index]
-			videos[country][ID]['thumbnail_link'] = global_data[country]['thumbnail_link'][index]
-			videos[country][ID]['title'] = global_data[country]['title'][index]
+			videos[country][ID]['comment_count'] = urls.global_data[country]['comment_count'][index]
+			videos[country][ID]['thumbnail_link'] = urls.global_data[country]['thumbnail_link'][index]
+			videos[country][ID]['title'] = urls.global_data[country]['title'][index]
 
 			# Modify publish time for easier calculations
 			# Looks like (year, day, month)
-			publish_time = parseDate(global_data[country]['publish_time'][index])
+			publish_time = parseDate(urls.global_data[country]['publish_time'][index])
 			videos[country][ID]['published_date'] = publish_time
-			videos[country][ID]['trending_dates'].append(global_data[country]['trending_date'][index])
-			videos[country][ID]['category'] = categories_to_names(global_data[country]['category_id'][index], country)
-			videos[country][ID]['likes'] = global_data[country]['likes'][index]
-			videos[country][ID]['dislikes'] = global_data[country]['dislikes'][index]
-			videos[country][ID]['views'] = global_data[country]['views'][index]
+			videos[country][ID]['trending_dates'].append(urls.global_data[country]['trending_date'][index])
+			videos[country][ID]['category'] = categories_to_names(urls.global_data[country]['category_id'][index], country)
+			videos[country][ID]['likes'] = urls.global_data[country]['likes'][index]
+			videos[country][ID]['dislikes'] = urls.global_data[country]['dislikes'][index]
+			videos[country][ID]['views'] = urls.global_data[country]['views'][index]
 
 	return videos
 
 
-def comment_count_per_country(videos):
+def comment_count_per_country():
 	# counts looks like:
 	# {'US': {'total_comments': 1242512, 'average_comments': 5000}}
 	counts = {}
@@ -186,9 +186,10 @@ def comment_count_per_country(videos):
 	return counts
 
 # Grab top 5 trending length videos for each country
-def trending_stats(videos):
+def trending_stats():
 	# time looks like:
 	# {'US': {'18dja98s': {'trending_length': 1, 'time_to_trend': 1, 'thumbnail_link': 'https://aasidh.com'}, ...}, ...}
+	top5 = {}
 	time = {}
 	for country in videos.keys():
 		time[country] = {}
@@ -202,4 +203,8 @@ def trending_stats(videos):
 				time[country][ID]['trending_length'] = 0
 				time[country][ID]['time_to_trend'] = 0
 				time[country][ID]['thumbnail_link'] = ''
+		top5[country] = {}
+		top5[country]['top_trending'] = topTrending(time[country])
+
+	# DO TOP 5 CALCULATIONS HERE
 	return time

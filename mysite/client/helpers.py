@@ -203,3 +203,12 @@ def timeToTrend(dates, pub_date):
 	delta = l_date - f_date
 
 	return delta.days
+
+
+def topTrending(country_dict):
+	top5 = {}
+	top5['top_trending'] = []
+	top5['top_published'] = []
+
+	for video in country_dict.keys():
+		print('fuck')

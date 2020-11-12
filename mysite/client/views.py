@@ -112,6 +112,13 @@ def averagePerCategory(request):
 	context['views_div'] = views_div
 	return render(request, 'avgPerCat.html', context)
 
+# Finish this one
+# What to do: 
+# 
+def trendingPerCountry(request):
+	context = {}
+	trending = 1
+
 def top20MostLiked(request):
 	context = {}
 	mostLiked = top_20_most_liked()
