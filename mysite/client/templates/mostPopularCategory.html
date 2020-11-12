@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+    <div class='container'>
+        <h1>Most Popular Category Per Country</h1>
+        <!-- CHARTS GO HERE -->
+        {% autoescape off %}
+        {{viewsDivUS}}
+        {{viewsDivCA}}
+        {{viewsDivDE}}
+        {{viewsDivGB}}
+        {% endautoescape %}
+    </div>
+{% endblock %} 
