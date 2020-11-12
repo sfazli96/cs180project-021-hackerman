@@ -5,7 +5,7 @@ def loadCSV(countries):
 	# Load up CSV so that it's available to all
 	country_dict = {}
 	for country in countries:
-		filepath = '/home/kratos/Documents/cs180project-021-hackerman/mysite/client/data/{}videos.csv'.format(country)
+		filepath = '/mnt/d/Documents/UC-Riverside/Fall-2020/CS180/Class-Projects/cs180project-021-hackerman/mysite/client/data/{}videos.csv'.format(country)
 		print('Loading up {} CSV file...'.format(country))
 		country_dict[country] = parseCSV(filepath)
 		print('Finished loading up {}'.format(country))
@@ -13,7 +13,7 @@ def loadCSV(countries):
 
 # Parse CSV files with these helper function
 def parseCSV(filepath):
-	with open(filepath, newline='\n') as rows:
+	with open(filepath, newline='\n', errors='ignore') as rows:
 		data = {}   
 		headers = rows.readline().split(',')
 
