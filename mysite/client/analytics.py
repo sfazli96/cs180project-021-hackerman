@@ -2,29 +2,60 @@ from .helpers import *
 from hackerman import urls
 import json
 from collections import Counter
+#, 'GB', 'DE', 'CA'
+# countries = ['US']
+# global_data = loadCSV(countries)
 
+
+# Changes category_id from csv to a string
+# Example: 22 -> 'Entertainment'
 def categories_to_names(category, country):
+	# Open json file specific to the country csv file.
+	# The {} in the file name gets replaced with 'US' or 'GB', etc
 	with open('/home/kratos/Documents/cs180project-021-hackerman/mysite/client/data/{}_category_id.json'.format(country)) as f:
+		# category_names is dictionary now
 		category_names = json.load(f)
+
+	# Iterate through json file until you've found the category ID passed in
 	for item in category_names['items']:
 		if category == item['id']:
 			f.close()
+
+			# This return should look something like:
+			# item['snippet']['title'] => 'Entertainment'
 			return item['snippet']['title']
 
+# Average likes, dislikes and views per category for the USA.
 def avg_per_cat():
 
+	# Create empty dictionaries for data we want
 	response = {}
 	names = {}
+
+	# Make list of unique category ID values
+	# categories looks liks this:
+	# categories = [1, 15, 22, 25, ...]
 	categories = list(set(urls.global_data['US']['category_id']))
+
+	# Initialize names and response dictionaries
 	for cat in categories:
+		# Convert category ID to string
 		name = categories_to_names(cat, 'US')
+
+		# names looks like:
+		# {22: 'Entertainment', 24: 'Gaming', ...}
 		names[cat] = name
+
+		# resposne looks like:
+		# {'Entertainment': {'likes': [0, 0], 'dislikes': [0, 0], 'views': [0, 0]}, ...}
 		response[name] = {'likes': [0, 0], 'dislikes': [0, 0], 'views': [0, 0]}
 
+	# Iterate through category IDs, and enumerate to have index
 	for i, value in enumerate(urls.global_data['US']['category_id']):
 		if value:
-			#name = categories_to_names(value)
+			# If the likes entry exists and is not null
 			if urls.global_data['US']['likes'][i]:
+				# Then record the data into the response dictionary
 				response[names[value]]['likes'][0] += int(urls.global_data['US']['likes'][i])
 				response[names[value]]['likes'][1] += 1
 			if urls.global_data['US']['dislikes'][i]:
@@ -34,15 +65,18 @@ def avg_per_cat():
 				response[names[value]]['views'][0] += int(urls.global_data['US']['views'][i])
 				response[names[value]]['views'][1] += 1
 
+	# This dictionary will hold all numbers used to plot the graph
 	analyze_this = {}
 
+	# Go through the categories to average likes/dislikes/views
 	for cat in categories:
 		avg_likes = response[names[cat]]['likes'][0]/response[names[cat]]['likes'][1]
 		avg_dislikes = response[names[cat]]['dislikes'][0]/response[names[cat]]['dislikes'][1]
 		avg_views = response[names[cat]]['views'][0]/response[names[cat]]['views'][1]
+
+		# Finally set this value to each category
 		analyze_this[names[cat]] = {'avg_likes': avg_likes, 'avg_dislikes': avg_dislikes, 'avg_views': avg_views}
 
-	# print(analyze_this)
 	return analyze_this
 
 def top_20_most_liked():
@@ -74,8 +108,6 @@ def top_20_most_liked():
 
 	return top20mostliked
 
-# filepath = '/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/USvideos.csv'
-# avg_per_cat(filepath)
 
 def top_20_most_disliked():
 	# Create two lists: one for the keys, and one for the values
@@ -105,6 +137,30 @@ def top_20_most_disliked():
 	top20mostdisliked = dict(k.most_common(20))
 
 	return top20mostdisliked
+# Get various modified data on each video
+# DONT WORRY ABOUT THIS CODE:
+# def video_info():
+# 	# Make dictionary with video_ids
+# 	videos = {}
 
-# filepath = '/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/USvideos.csv'
-# avg_per_cat(filepath)
+# 	# Iterate through every country to get comment counts and
+# 	# various other information on each video
+# 	for country in global_data.keys():
+# 		# Create empty dictionary for each country
+# 		videos[country] = {}
+# 		for index, ID in enumerate(global_data[country]['video_id']):
+# 			if index == 0:
+# 				videos[country][ID] = {}
+# 				videos[country][ID]['comment_count'] = []
+# 			# Looks like: {'US': {'28x7aysd7': {'comment_count': [123, 123, 123, ...], 'thumbnail': 'asdjwhihasd.com', ...}}}
+# 			videos[country][ID]['comment_count'].append(global_data[country]['comment_count'][index])
+# 			videos[country][ID]['thumbnail_link'] = global_data[country]['thumbnail_link'][index]
+# 			videos[country][ID]['title'] = global_data[country]['title'][index]
+# 			# Modify publish time to look like trending date
+# 			# So, from 2017-11-10T17:00:03.000Z to 17.10.11
+# 			publish_time = parseDate(global_data[country]['publish_time'][index])
+# 			break
+# 			videos[country][ID]['published_date'] = publish_time
+
+
+#video_info()
