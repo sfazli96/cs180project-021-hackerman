@@ -2,13 +2,15 @@
 
 {% block page_content %}
 	<div class='container'>
+		<body style="background-image: linear-gradient(to right, #445898 , #995A10);">
 		<h1>Trending videos on Youtube in Countries</h1>
 		<!-- FORM GOES HERE -->
 		<form method="GET">
 			{{ form.as_p }}
 			{% csrf_token %}
-			<input type="submit" class="btn btn-info" value="Submit">
-			<a href="{% url 'home' %}">Go back to home page</a>
+			<button style="background-color:#17a2b8; color:white; width: 75px;height: 40px; border-radius: 25px; border: none" onclick="location.href='http://127.0.0.1:8000/'" type="button">
+         		Home</button value="Submit">
+			<input type="submit" style="border-radius: 25px" class="btn btn-info" value="Submit">
 			<!--<input type="button" value="Go back!" onclick="history.back()">   -->
 		</form>
 		{% if data.channel_title == None %}

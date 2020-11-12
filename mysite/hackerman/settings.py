@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+STATICFILES_DIRS = [
+    "/home/kratos/Documents/cs180project-021-hackerman/mysite/client/static",
+]
+
 
 # Application definition
 
