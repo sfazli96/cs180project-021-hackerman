@@ -10,4 +10,6 @@ urlpatterns = [
 	path('disabled/', views.disabledCommentsAndRatings, name='disabledCommentsAndRatings'),
 	path('most_popular_categories/', views.mostPopularCategory, name='mostPopularCategory'),
 	path('', views.home, name='home'),
+	path('countries/', views.CountriesView.as_view(), name = 'countries'),
+
 ]

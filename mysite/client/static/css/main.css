@@ -1,0 +1,16 @@
+#middle {
+    margin: 0 auto;
+    width: 1050px;
+    height: 175px;
+    margin-top: 89px;
+}
+
+.icon_middle {
+        width:50px;
+    float: right;
+    width: 100px;
+    height: 85px;
+}
+.icon_middle span {
+    display:block;
+}
