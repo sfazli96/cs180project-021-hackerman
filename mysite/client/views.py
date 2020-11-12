@@ -92,7 +92,6 @@ class CountriesView(View):
 		context = {'form': form, 'data': data, 'submitbutton': submitbutton}
 		return render(request, self.template_name, context)
 
-
 def averagePerCategory(request):
 	context = {}
 	avg_per = avg_per_cat()

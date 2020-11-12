@@ -254,7 +254,6 @@ def most_popular_categories(country_name):
 		analyze_this[names[cat]] = {'video_views' : video_views}
 
 	return analyze_this
-# =============================================================================================================================================================
 
 # Get various modified data on each video
 # DONT WORRY ABOUT THIS CODE:
