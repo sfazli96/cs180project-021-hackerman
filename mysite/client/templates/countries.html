@@ -3,9 +3,9 @@
 {% block page_content %}
 	<div class='container'>
 		<body style="background-image: linear-gradient(to right, #445898 , #995A10);">
-		<h1>Trending videos on Youtube in Countries</h1>
+		<h1 style="color: white;">Trending videos on Youtube in Countries</h1>
 		<!-- FORM GOES HERE -->
-		<form method="GET">
+		<form method="GET" style="color: white;">
 			{{ form.as_p }}
 			{% csrf_token %}
 			<button style="background-color:#17a2b8; color:white; width: 75px;height: 40px; border-radius: 25px; border: none" onclick="location.href='http://127.0.0.1:8000/'" type="button">
@@ -15,8 +15,8 @@
 		</form>
 		{% if data.channel_title == None %}
 		{% else %}
-		<h1>These are the results for {{data.channel_title}} in {{data.country}}</h1>
-		<table class="table" style="border-collapse: collapse;">
+		<h1 style="color: white;">These are the results for {{data.channel_title}} in {{data.country}}</h1>
+		<table class="table" style="border-collapse: collapse; color: white;">
 			<thead class="thead-dark">
 			<tr>
 				<th> Video ID </th>
