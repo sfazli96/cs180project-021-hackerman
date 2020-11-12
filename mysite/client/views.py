@@ -112,6 +112,9 @@ def averagePerCategory(request):
 	context['views_div'] = views_div
 	return render(request, 'avgPerCat.html', context)
 
+# Analytics for the Top 20 Most Liked Videos
+# Ranks the Top 20 Most Liked Videos in the CSV files
+# Calculates the average number of likes per video (out of the Top 20)
 def top20MostLiked(request):
 	context = {}
 	mostLiked = top_20_most_liked()
@@ -123,18 +126,24 @@ def top20MostLiked(request):
 	for item in items:
 		most_liked_keys.append(item[0]), most_liked_vals.append(item[1])
 
-	# Loops that print output of each list, only for testing
-	'''for i in range(len(most_liked_keys)):
-		print(most_liked_keys[i])
-
-	for i in range(len(most_liked_vals)):
-		print(most_liked_vals[i])'''
-
 	most_likes_fig = go.Figure(data=[go.Bar(x=most_liked_keys, y=most_liked_vals)], layout=go.Layout(title='<b>Top 20 Most Liked Videos', yaxis={'title': '<b>Likes'}, xaxis={'title': '<b>Video Name'}))
 	mostLikedDiv = plot(figure_or_data=most_likes_fig, output_type='div')
 	context['mostLikedDiv'] = mostLikedDiv
+
+	# Create a box that outputs the average number of likes
+	average_most_likes = 0
+
+	for i in most_liked_vals:
+		average_most_likes += i
+
+	average_most_likes = average_most_likes / len(most_liked_vals)
+	context['averageMostLikes'] = average_most_likes
+
 	return render(request, 'top20MostLiked.html', context)
 
+# Analytics for the Top 20 Most Disliked Videos
+# Ranks the Top 20 Most Disliked Videos in the CSV files
+# Calculates the average number of dislikes per video (out of the Top 20)
 def top20MostDisliked(request):
 	context = {}
 	mostDisliked = top_20_most_disliked()
@@ -146,18 +155,11 @@ def top20MostDisliked(request):
 	for item in items:
 		most_disliked_keys.append(item[0]), most_disliked_vals.append(item[1])
 
-	# Loops that print output of each list, only for testing
-	'''for i in range(len(most_disliked_keys)):
-		print(most_disliked_keys[i])
-
-	for i in range(len(most_disliked_vals)):
-		print(most_disliked_vals[i])'''
-
 	most_dislikes_fig = go.Figure(data=[go.Bar(x=most_disliked_keys, y=most_disliked_vals)], layout=go.Layout(title='<b>Top 20 Most Disliked Videos', yaxis={'title': '<b>Dislikes'}, xaxis={'title': '<b>Video Name'}))
 	mostDislikedDiv = plot(figure_or_data=most_dislikes_fig, output_type='div')
 	context['mostDislikedDiv'] = mostDislikedDiv
 
-	# Create a box that outputs the average number of likes
+	# Create a box that outputs the average number of dislikes
 	average_most_dislikes = 0
 
 	for i in most_disliked_vals:
@@ -167,6 +169,41 @@ def top20MostDisliked(request):
 	context['averageMostDislikes'] = average_most_dislikes
 
 	return render(request, 'top20MostDisliked.html', context)
+
+# Analytics for countries that disable their comments section and likes/dislikes bar
+# Calculate the number of disabled videos for each dataset, and then put those restuls into a pie chart
+def disabledCommentsAndRatings(request):
+	# FOR DISABLED COMMENTS
+	context = {}
+	comments_pass = 1
+	ratings_pass = 2
+	disabled_comments_vids = disabled(comments_pass)
+
+	# Split dictionary into two lists
+	disabled_comments_keys = []
+	disabled_comments_vals = []
+	comments_items = disabled_comments_vids.items()
+	for item in comments_items:
+		disabled_comments_keys.append(item[0]), disabled_comments_vals.append(item[1])
+
+	disabled_comments_fig = go.Figure(data=[go.Pie(labels=disabled_comments_keys, values=disabled_comments_vals)])
+	disabledCommentsFig = plot(figure_or_data=disabled_comments_fig, output_type='div')
+	context['disabledCommentsFig'] = disabledCommentsFig
+
+	# FOR DISABLED RATINGS
+	disabled_ratings_vids = disabled(ratings_pass)
+
+	disabled_ratings_keys = []
+	disabled_ratings_vals = []
+	ratings_items = disabled_ratings_vids.items()
+	for item in ratings_items:
+		disabled_ratings_keys.append(item[0]), disabled_ratings_vals.append(item[1])
+
+	disabled_ratings_fig = go.Figure(data=[go.Pie(labels=disabled_ratings_keys, values=disabled_ratings_vals)])
+	disabledRatingsFig = plot(figure_or_data=disabled_ratings_fig, output_type='div')
+	context['disabledRatingsFig'] = disabledRatingsFig
+
+	return render(request, 'disabledCommentsAndRatings.html', context)
 
 def mostPopularCategory(request):
     context = {}

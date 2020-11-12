@@ -100,13 +100,6 @@ def top_20_most_liked():
 	for i in range(0, len(list_likes)):
 		list_likes[i] = int(list_likes[i])
 
-	# One way of putting both lists into a dictionary file
-	'''for key in list_titles:
-		for value in list_likes:
-			twentyMostLiked[key] = value
-			list_likes.remove(value)
-			break'''
-
 	# Another way of putting both lists into a dictionary file
 	twentyMostLiked = {list_titles[i]: list_likes[i]
 	    for i in range(len(list_titles))}
@@ -116,7 +109,6 @@ def top_20_most_liked():
 	top20mostliked = dict(k.most_common(20))
 
 	return top20mostliked
-
 
 def top_20_most_disliked():
 	# Create two lists: one for the keys, and one for the values
@@ -131,13 +123,6 @@ def top_20_most_disliked():
 	for i in range(0, len(list_dislikes)):
 		list_dislikes[i] = int(list_dislikes[i])
 
-	# One way of putting both lists into a dictionary file
-	'''for key in list_titles:
-		for value in list_dislikes:
-			twentyMostDisliked[key] = value
-			list_dislikes.remove(value)
-			break'''
-
 	# Another way of putting both lists into a dictionary file
 	twentyMostDisliked = {list_titles[i]: list_dislikes[i]
 	    for i in range(len(list_titles))}
@@ -147,6 +132,88 @@ def top_20_most_disliked():
 	top20mostdisliked = dict(k.most_common(20))
 
 	return top20mostdisliked
+
+def disabled(num):
+	if num == 1:
+		thisDict = {}
+		thisDict = disabled_comments()
+		return thisDict
+	else:
+		thatDict = {}
+		thatDict = disabled_ratings()
+		return thatDict
+
+def disabled_comments():
+	disabled_comments_US = 0
+	disabled_comments_CA = 0
+	disabled_comments_GB = 0
+	disabled_comments_DE = 0
+
+	# Disabled comments sections for each country
+	# Append the status of all comments sections for each country into their own list
+	list_disabled_comments_US = list(urls.global_data['US']['comments_disabled'])
+	list_disabled_comments_CA = list(urls.global_data['CA']['comments_disabled'])
+	list_disabled_comments_GB = list(urls.global_data['GB']['comments_disabled'])
+	list_disabled_comments_DE = list(urls.global_data['DE']['comments_disabled'])
+
+	# Loop through all the videos with disabled comments
+	# For every instance of a video with a disabled comments section, increment a counter
+	# United States
+	for i in range(0, len(list_disabled_comments_US)):
+		if list_disabled_comments_US[i] == 'True':
+			disabled_comments_US += 1
+	# Canada
+	for i in range(0, len(list_disabled_comments_CA)):
+		if list_disabled_comments_CA[i] == 'True':
+			disabled_comments_CA += 1
+	# Great Britain
+	for i in range(0, len(list_disabled_comments_GB)):
+		if list_disabled_comments_GB[i] == 'True':
+			disabled_comments_GB += 1
+	# Germany
+	for i in range(0, len(list_disabled_comments_DE)):
+		if list_disabled_comments_DE[i] == 'True':
+			disabled_comments_DE += 1
+
+	all_disabled_comments_vids = { 'United States' : disabled_comments_US, 'Canada' : disabled_comments_CA, 'Great Britain' : disabled_comments_GB, 'Germany' : disabled_comments_DE }
+
+	# Sort dictionary from most comments-disabled videos to least
+	all_disabled_comments_vids = Counter(all_disabled_comments_vids)
+	return all_disabled_comments_vids
+
+def disabled_ratings():
+	disabled_ratings_US = 0
+	disabled_ratings_CA = 0
+	disabled_ratings_GB = 0
+	disabled_ratings_DE = 0
+
+	list_disabled_ratings_US = list(urls.global_data['US']['ratings_disabled'])
+	list_disabled_ratings_CA = list(urls.global_data['CA']['ratings_disabled'])
+	list_disabled_ratings_GB = list(urls.global_data['GB']['ratings_disabled'])
+	list_disabled_ratings_DE = list(urls.global_data['DE']['ratings_disabled'])
+
+	for i in range(0, len(list_disabled_ratings_US)):
+		if list_disabled_ratings_US[i] == 'True':
+			disabled_ratings_US += 1
+
+	for i in range(0, len(list_disabled_ratings_CA)):
+		if list_disabled_ratings_CA[i] == 'True':
+			disabled_ratings_CA += 1
+	
+	for i in range(0, len(list_disabled_ratings_GB)):
+		if list_disabled_ratings_GB[i] == 'True':
+			disabled_ratings_GB += 1
+
+	for i in range(0, len(list_disabled_ratings_DE)):
+		if list_disabled_ratings_DE[i] == 'True':
+			disabled_ratings_DE += 1
+
+	all_disabled_ratings_vids = { 'United States' : disabled_ratings_US, 'Canada' : disabled_ratings_CA, 'Great Britain' : disabled_ratings_GB, 'Germany' : disabled_ratings_DE }
+	all_disabled_ratings_vids = Counter(all_disabled_ratings_vids)
+	return all_disabled_ratings_vids
+
+# filepath = '/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/USvideos.csv'
+# avg_per_cat(filepath)
 
 def most_popular_categories(country_name):
 	response = {}
@@ -214,5 +281,4 @@ def most_popular_categories(country_name):
 # 			break
 # 			videos[country][ID]['published_date'] = publish_time
 
-
-# video_info()
+#video_info()
