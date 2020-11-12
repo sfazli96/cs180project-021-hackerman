@@ -172,11 +172,21 @@ def mostPopularCategory(request):
     context = {}
 
 	# For the US
-    most_popular_US = most_popular_categories()
+    most_popular_US = most_popular_categories('US')
 
     categories_US = list(most_popular_US.keys())
     video_views_US = [most_popular_US[cat]['video_views'] for cat in categories_US]
     views_fig_US = go.Figure(data=[go.Bar(x=categories_US, y=video_views_US)], layout=go.Layout(width=800, height=450, title='Most Popular Per Category in the USA', yaxis={'title': 'Views'}, xaxis={'title': 'Categories'}))
     viewsDivUS = plot(figure_or_data=views_fig_US, output_type='div')
     context['viewsDivUS'] = viewsDivUS
+
+	# For Canada
+    most_popular_CA = most_popular_categories('CA')
+
+    categories_CA = list(most_popular_CA.keys())
+    video_views_CA = [most_popular_CA[cat]['video_views'] for cat in categories_CA]
+    views_fig_CA = go.Figure(data=[go.Bar(x=categories_CA, y=video_views_CA)], layout=go.Layout(width=800, height=450, title='Most Popular Per Category in Canada', yaxis={'title': 'Views'}, xaxis={'title': 'Categories'}))
+    viewsDivCA = plot(figure_or_data=views_fig_CA, output_type='div')
+    context['viewsDivCA'] = viewsDivCA
+	
     return render(request, 'mostPopularCategory.html', context) 

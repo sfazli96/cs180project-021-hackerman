@@ -148,19 +148,19 @@ def top_20_most_disliked():
 
 	return top20mostdisliked
 
-def most_popular_categories():
+def most_popular_categories(country_name):
 	response = {}
 	names = {}
 
 	# Make list of unique category ID values
 	# categories looks liks this:
 	# categories = [1, 15, 22, 25, ...]
-	categories = list(set(urls.global_data['US']['category_id']))
+	categories = list(set(urls.global_data[country_name]['category_id']))
 
 	# Initialize names and response dictionaries
 	for cat in categories:
 		# Convert category ID to string
-		name = categories_to_names(cat, 'US')
+		name = categories_to_names(cat, country_name)
 
 		# names looks like:
 		# {22: 'Entertainment', 24: 'Gaming', ...}
@@ -171,12 +171,12 @@ def most_popular_categories():
 		response[name] = {'views': [0, 0]}
 
 	# Iterate through category IDs, and enumerate to have index
-	for i, value in enumerate(urls.global_data['US']['category_id']):
+	for i, value in enumerate(urls.global_data[country_name]['category_id']):
 		if value:
 			# If the views entry exists and is not null
-			if urls.global_data['US']['views'][i]:
+			if urls.global_data[country_name]['views'][i]:
 				# Then record the data into the response dictionary
-				response[names[value]]['views'][0] += int(urls.global_data['US']['views'][i])
+				response[names[value]]['views'][0] += int(urls.global_data[country_name]['views'][i])
 				response[names[value]]['views'][1] += 1
 
 	analyze_this = {}
