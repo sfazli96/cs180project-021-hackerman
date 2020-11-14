@@ -6,9 +6,12 @@ from .analytics import *
 from plotly.offline import plot
 import plotly.graph_objs as go
 from hackerman import urls
+from google_drive_downloader import GoogleDriveDownloader as gdd
+import pathlib
+
 
 def home(request):
-	return render(request, 'home.html', {})
+	return render(request,'home.html',{})
 
 class UnitedStatesView(View):
 	template_name = 'US.html'
