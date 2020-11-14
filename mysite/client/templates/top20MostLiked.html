@@ -2,17 +2,18 @@
 
 {% block page_content %}
 	<div class='container'>
-		<h1>Top 20 Most Liked Videos</h1>
+		<body style="background-image: linear-gradient(to right, #445898 , #995A10);">
+		<h1 style="color: white;">Top 20 Most Liked Videos</h1>
 		<!-- CHARTS GO HERE -->
         {% autoescape off %}
         {{mostLikedDiv}}
 		{% endautoescape %}
 	</div>
-	<div style="margin-top: 150px; margin-left: 700px; margin-right: 700px; margin-bottom: 150px; border: 5px; border-style: solid; border-color: #000000; padding: 1em; text-align: center">
-		<h5>
+	<div style="margin-top: 150px; margin-left: 700px; margin-right: 700px; margin-bottom: 150px; border: 5px; border-style: solid; border-color: white; padding: 1em; text-align: center">
+		<h5 style="color: white;">
 			Average Number of Likes Per Video:
 		</h5>
-		<h1>
+		<h1 style="color: white;">
 			{{averageMostLikes}}
 		</h1>
 	</div>

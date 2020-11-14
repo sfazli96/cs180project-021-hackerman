@@ -5,7 +5,7 @@
   <span style="font-size: 2em; color: #E11010;">
     <i class="fab fa-youtube"></i>
   </span>
-  <a class="navbar-brand" href="{% url 'home' %}" style="color: #F6F6F1">Youtube Trending</a>
+  <a class="navbar-brand" href="{% url 'home' %}" style="color: #F6F6F1;">Youtube Trending</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -34,19 +34,24 @@
       </a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
         <a class="dropdown-item" href="{%url 'top20MostLiked' %}"> 
-          <span style="font-size: 25px; color: #00F9E9;">
+          <span style="font-size: 25px; color: #04FF00;">
         <i class="fas fa-thumbs-up"></i>
           </span>Top 20 Most Liked videos</a> 
         <a class="dropdown-item" href="{%url 'top20MostDisliked' %}"> 
-          <span style="font-size: 25px; color: Red;">
+          <span style="font-size: 25px; color: #FF2019;">
         <i class="fas fa-thumbs-down"></i> 
       </span>Top 20 Most Disliked videos</a> 
         <a class="dropdown-item" href="{% url 'avgPerCat' %}">Average Per Category(US)</a>
-        <a class="dropdown-item" href="{% url 'disabledCommentsAndRatings' %}">Disabled Comments and Ratings</a>
-        <a class="dropdown-item" href="{% url 'mostPopularCategory' %}">Most Popular Category Per Country</a>
+        <a class="dropdown-item" href="{% url 'disabledCommentsAndRatings' %}">
+          <span style="font-size: 25px; color: #00F0FF">
+            <i class="fas fa-comments"></i>
+          </span>Disabled Comments and Ratings</a>
+        <a class="dropdown-item" href="{% url 'mostPopularCategory' %}">
+        <span style="font-size: 25px; color: #0EFFED">
+          <i class="fas fa-globe"></i>
+        </span>Most Popular Category Per Country</a>
         <div class="clear"></div>
     </div>
-
     </ul>
   </div>
 </nav>
