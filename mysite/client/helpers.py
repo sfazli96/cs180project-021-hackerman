@@ -1,11 +1,13 @@
 from difflib import SequenceMatcher
 from hackerman import urls
+import pathlib
 
 def loadCSV(countries):
 	# Load up CSV so that it's available to all
 	country_dict = {}
 	for country in countries:
-		filepath = '/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/{}videos.csv'.format(country)
+		# filepath = '/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/{}videos.csv'.format(country)
+		filepath = pathlib.Path(__file__).parent / 'data/{}videos.csv'.format(country)
 		print('Loading up {} CSV file...'.format(country))
 		country_dict[country] = parseCSV(filepath)
 		print('Finished loading up {}'.format(country))

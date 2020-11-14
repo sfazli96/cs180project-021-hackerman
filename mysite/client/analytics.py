@@ -2,6 +2,7 @@ from .helpers import *
 from hackerman import urls
 import json
 from collections import Counter
+import pathlib
 # , 'GB', 'DE', 'CA'
 # countries = ['US']
 # global_data = loadCSV(countries)
@@ -12,7 +13,8 @@ from collections import Counter
 def categories_to_names(category, country):
 	# Open json file specific to the country csv file.
 	# The {} in the file name gets replaced with 'US' or 'GB', etc
-	with open('/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/{}_category_id.json'.format(country)) as f:
+	# with open('/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/{}_category_id.json'.format(country)) as f:
+	with open(pathlib.Path(__file__).parent / 'data/{}_category_id.json'.format(country)) as f:
 		# category_names is dictionary now
 		category_names = json.load(f)
 
