@@ -5,9 +5,13 @@ from google_drive_downloader import GoogleDriveDownloader as gdd
 import requests
 
 def loadCSV(countries):
+	# First download the CSV and JSON files from Google Drive
+	# Downloads a zip file and unzips all CSV and JSON files into a folder called "data"
+	# If the folder already exists, it will skip this part
+	if not pathlib.Path('client/data/').exists():
+		gdd.download_file_from_google_drive(file_id='1xLFbM_pb_-tkcjCQY6IwlyJG1u5M4Qs9',dest_path='client/data/data.zip',unzip=True)
+	
 	# Load up CSV so that it's available to all
-	#if request.GET.get('Download') == 'Download':
-	gdd.download_file_from_google_drive(file_id='1xLFbM_pb_-tkcjCQY6IwlyJG1u5M4Qs9',dest_path='client/data/data.zip',unzip=True)
 	country_dict = {}
 	for country in countries:
 		# filepath = '/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/{}videos.csv'.format(country)
