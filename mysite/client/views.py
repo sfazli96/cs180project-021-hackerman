@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from .forms import USForm, countriesForm
+from .forms import *
 from .helpers import *
 from .analytics import *
 from plotly.offline import plot
@@ -12,6 +12,67 @@ import pathlib
 
 def home(request):
 	return render(request,'home.html',{})
+
+def modifyDataset(request):
+	template_name = 'modifyDataset.html'
+	context = {}
+	data = {}
+
+	if request.method=='GET':
+		insert_form = InsertForm()
+		delete_form = DeleteForm()
+		update_form = UpdateForm()
+		context['insert_form'] = insert_form
+		context['delete_form'] = delete_form
+		context['update_form'] = update_form
+
+	elif request.method=='POST':
+		
+		if request.POST.get('insert'):
+			insert_form = InsertForm(request.POST)
+			context['insert_form'] = insert_form
+			if insert_form.is_valid():
+				button_press = request.POST.get('insert')
+				data['country'] = insert_form.cleaned_data.get('country')
+				data['channel_title'] = insert_form.cleaned_data.get('channel_title')
+				data['video_id'] = insert_form.cleaned_data.get('video_id')
+				data['trending_date'] = insert_form.cleaned_data.get('trending_date')
+				data['publish_date'] = insert_form.cleaned_data.get('publish_date')
+				data['category_id'] = insert_form.cleaned_data.get('category_id')
+				data['views'] = insert_form.cleaned_data.get('views')
+				data['likes'] = insert_form.cleaned_data.get('likes')
+				data['dislikes'] = insert_form.cleaned_data.get('dislikes')
+				data['comment_count'] = insert_form.cleaned_data.get('comment_count')
+				context['button_press'] = button_press
+				insert(data)
+		elif request.POST.get('delete'):
+			delete_form = DeleteForm(request.POST)
+			context['delete_form'] = delete_form
+			if delete_form.is_valid():
+				button_press = request.POST.get('delete')
+				data['country'] = delete_form.cleaned_data.get('country')
+				data['channel_title'] = delete_form.cleaned_data.get('channel_title')
+				context['button_press'] = button_press
+				delete(data)
+		elif request.POST.get('update'):
+			update_form = UpdateForm(request.POST)
+			context['update_form'] = update_form
+			if update_form.is_valid():
+				button_press = request.POST.get('update')
+				data['country'] = update_form.cleaned_data.get('country')
+				data['channel_title'] = update_form.cleaned_data.get('channel_title')
+				data['video_id'] = update_form.cleaned_data.get('video_id')
+				data['trending_date'] = update_form.cleaned_data.get('trending_date')
+				data['publish_date'] = update_form.cleaned_data.get('publish_date')
+				data['category_id'] = update_form.cleaned_data.get('category_id')
+				data['views'] = update_form.cleaned_data.get('views')
+				data['likes'] = update_form.cleaned_data.get('likes')
+				data['dislikes'] = update_form.cleaned_data.get('dislikes')
+				data['comment_count'] = update_form.cleaned_data.get('comment_count')
+				context['button_press'] = button_press
+				update(data)
+
+	return render(request, template_name, context)
 
 class UnitedStatesView(View):
 	template_name = 'US.html'

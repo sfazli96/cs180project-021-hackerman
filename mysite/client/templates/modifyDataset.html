@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+	<div class='container'>
+		<body style="background-image: linear-gradient(to right, #445898 , #995A10);">
+		<!-- FORM GOES HERE -->
+		<div class="row">
+			<div class="col-sm">
+				<h1 style="color: white;">INSERT</h1>
+				<form method="POST" style="color: white;">
+					{{ insert_form.as_p }}
+					{% csrf_token %}
+					<input type="submit" name="insert" style="border-radius: 25px" class="btn btn-warning" value="Insert">
+				</form>
+			</div>
+			<div class="col-sm">
+				<h1 style="color: white;">DELETE</h1>
+				<form method="POST" style="color: white;">
+					{{ delete_form.as_p }}
+					{% csrf_token %}
+					<input type="submit" name="delete" style="border-radius: 25px" class="btn btn-danger" value="Delete">
+				</form>
+			</div>
+			<div class="col-sm">
+				<h1 style="color: white;">UPDATE</h1>
+				<form method="POST" style="color: white;">
+					{{ update_form.as_p }}
+					{% csrf_token %}
+					<input type="submit" name="update" style="border-radius: 25px" class="btn btn-secondary" value="Update">
+				</form>
+			</div>
+		</div>
+		{% if data.channel_title == None %}
+		{% else %}
+		<h1>DATA INSERTED</h1>
+		{% endif %}
+	</div>
+{% endblock %}

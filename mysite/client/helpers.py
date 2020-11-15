@@ -214,11 +214,20 @@ def timeToTrend(dates, pub_date):
 
 	return delta.days
 
+def insert(data):
+	print('DATA IS:', data)
+
+def delete(data):
+	print('DATA IS:', data)
+
+def update(data):
+	print('DATA IS:', data)
 
 def topTrending(country_dict):
 	top5 = {}
-	top5['top_trending'] = []
-	top5['top_published'] = []
-
+	# top5['top_trending'] = []
+	# top5['top_published'] = []
+	# Input data looks like:
+	# {'video_id': {}}
 	for video in country_dict.keys():
 		print('fuck')
