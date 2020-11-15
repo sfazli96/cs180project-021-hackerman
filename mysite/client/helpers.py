@@ -1,11 +1,22 @@
 from difflib import SequenceMatcher
+from datetime import date
 from hackerman import urls
+import pathlib
+from google_drive_downloader import GoogleDriveDownloader as gdd
+import requests
 
 def loadCSV(countries):
+	# First download the CSV and JSON files from Google Drive
+	# Downloads a zip file and unzips all CSV and JSON files into a folder called "data"
+	# If the folder already exists, it will skip this part
+	if not pathlib.Path('client/data/').exists():
+		gdd.download_file_from_google_drive(file_id='1xLFbM_pb_-tkcjCQY6IwlyJG1u5M4Qs9',dest_path='client/data/data.zip',unzip=True)
+	
 	# Load up CSV so that it's available to all
 	country_dict = {}
 	for country in countries:
-		filepath = '/home/kratos/Documents/cs180project-021-hackerman/mysite/client/data/{}videos.csv'.format(country)
+		# filepath = '/home/chair/Documents/UCRFall2020/CS180/project/cs180project-021-hackerman/mysite/client/data/{}videos.csv'.format(country)
+		filepath = pathlib.Path(__file__).parent/'data/{}videos.csv'.format(country)
 		print('Loading up {} CSV file...'.format(country))
 		country_dict[country] = parseCSV(filepath)
 		print('Finished loading up {}'.format(country))
@@ -155,15 +166,106 @@ def searchCSV(query, country):
 
 	return response
 
+# Parse date that is in a specific format
 def parseDate(date):
 	split_date = date.split('T')
 
-	print(split_date)
-	new_date = split_date[0][2:].replace('-', '.')
-	print(new_date)
-	month = new_date[3:5]
-	day = new_date[6:8]
-	print(month, day)
-	new_date = new_date.replace(month, day)
-	new_date = new_date.replace(day, month)
-	print(new_date)
+	new_date = split_date[0][2:].split('-')
+	year = new_date[0]
+	month = new_date[1]
+	day = new_date[2]
+	return (year, day, month)
+
+# returns how many days a video was trending
+def trendingLength(dates):
+	# Get first day of trending
+	date_first = dates[0].split('.')
+	year_first = int('20' + date_first[0])
+	day_first = int(date_first[1])
+	month_first = int(date_first[2])
+
+	# Get last day of trending
+	date_last = dates[len(dates)-1].split('.')
+	year_last = int('20' + date_last[0])
+	day_last = int(date_last[1])
+	month_last = int(date_last[2])
+
+	f_date = date(year_first, month_first, day_first)
+	l_date = date(year_last, month_last, day_last)
+
+	delta = l_date-f_date
+	return delta.days+1
+
+# Return amount of days it took to trend from published
+def timeToTrend(dates, pub_date):
+	first_date = dates[0].split('.')
+	# Get first day of trending
+	year_first = int('20' + first_date[0])
+	day_first = int(first_date[1])
+	month_first = int(first_date[2])
+	l_date = date(year_first, month_first, day_first)
+
+	p_year = int('20' + pub_date[0])
+	p_day = int(pub_date[1])
+	p_month = int(pub_date[2])
+	f_date = date(p_year, p_month, p_day)
+
+	delta = l_date - f_date
+
+	return delta.days
+
+def insert(data):
+	#print('DATA IS:', data)
+	urls.global_data[data['country']]['video_id'].append(data['video_id'])
+	urls.global_data[data['country']]['trending_date'].append(data['trending_date'])
+	urls.global_data[data['country']]['channel_title'].append(data['channel_title'])
+	urls.global_data[data['country']]['title'].append(data['title'])
+	urls.global_data[data['country']]['category_id'].append(data['category_id'])
+	urls.global_data[data['country']]['tags'].append([])
+	urls.global_data[data['country']]['publish_time'].append(data['publish_date'])
+	urls.global_data[data['country']]['views'].append(data['views'])
+	urls.global_data[data['country']]['likes'].append(data['likes'])
+	urls.global_data[data['country']]['dislikes'].append(data['dislikes'])
+	urls.global_data[data['country']]['comment_count'].append(data['comment_count'])
+	urls.global_data[data['country']]['thumbnail_link'].append('')
+	urls.global_data[data['country']]['comments_disabled'].append(False)
+	urls.global_data[data['country']]['ratings_disabled'].append(False)
+	urls.global_data[data['country']]['video_error_or_removed'].append(False)
+	urls.global_data[data['country']]['description'].append('')
+
+def delete(data):
+	#print('DATA IS:', data)
+	country = data['country']
+	indices_to_delete = []
+	for index, value in enumerate(urls.global_data[country]['channel_title']):
+		if data['channel_title'] == value:
+			del urls.global_data[country]['video_id'][index]
+			del urls.global_data[country]['trending_date'][index]
+			del urls.global_data[country]['channel_title'][index]
+			del urls.global_data[country]['title'][index]
+			del urls.global_data[country]['category_id'][index]
+			del urls.global_data[country]['tags'][index]
+			del urls.global_data[country]['publish_time'][index]
+			del urls.global_data[country]['views'][index]
+			del urls.global_data[country]['likes'][index]
+			del urls.global_data[country]['dislikes'][index]
+			del urls.global_data[country]['comment_count'][index]
+			del urls.global_data[country]['thumbnail_link'][index]
+			del urls.global_data[country]['comments_disabled'][index]
+			del urls.global_data[country]['ratings_disabled'][index]
+			del urls.global_data[country]['video_error_or_removed'][index]
+			del urls.global_data[country]['description'][index]
+
+	print('Deleted this shit.')
+
+def update(data):
+	print('DATA IS:', data)
+
+def topTrending(country_dict):
+	top5 = {}
+	# top5['top_trending'] = []
+	# top5['top_published'] = []
+	# Input data looks like:
+	# {'video_id': {}}
+	for video in country_dict.keys():
+		print('fuck')

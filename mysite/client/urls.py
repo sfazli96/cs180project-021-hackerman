@@ -12,5 +12,5 @@ urlpatterns = [
 	path('', views.home, name='home'),
 	path('countries/', views.CountriesView.as_view(), name = 'countries'),
 	path('about/', views.about, name='about'),
-
+	path('modifyDataset', views.modifyDataset, name='modifyDataset'),
 ]
