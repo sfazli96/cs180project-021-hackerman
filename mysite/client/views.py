@@ -260,3 +260,6 @@ def mostPopularCategory(request):
     context['viewsDivGB'] = viewsDivGB
 	
     return render(request, 'mostPopularCategory.html', context) 
+
+def about(request):
+	return render(request, 'about.html', {})

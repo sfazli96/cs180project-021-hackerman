@@ -11,5 +11,6 @@ urlpatterns = [
 	path('most_popular_categories/', views.mostPopularCategory, name='mostPopularCategory'),
 	path('', views.home, name='home'),
 	path('countries/', views.CountriesView.as_view(), name = 'countries'),
+	path('about/', views.about, name='about'),
 
 ]
