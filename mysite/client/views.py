@@ -134,6 +134,7 @@ class CountriesView(View):
 			print(data['country'])
 			search = searchCSV(data, data['country'])
 			context['search'] = search
+			context['size'] = len(search['channel_title'])
 		#print(search)
 		context['form'] = form
 		context['data'] = data

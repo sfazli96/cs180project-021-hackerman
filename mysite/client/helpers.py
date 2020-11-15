@@ -234,7 +234,29 @@ def insert(data):
 	urls.global_data[data['country']]['description'].append('')
 
 def delete(data):
-	print('DATA IS:', data)
+	#print('DATA IS:', data)
+	country = data['country']
+	indices_to_delete = []
+	for index, value in enumerate(urls.global_data[country]['channel_title']):
+		if data['channel_title'] == value:
+			del urls.global_data[country]['video_id'][index]
+			del urls.global_data[country]['trending_date'][index]
+			del urls.global_data[country]['channel_title'][index]
+			del urls.global_data[country]['title'][index]
+			del urls.global_data[country]['category_id'][index]
+			del urls.global_data[country]['tags'][index]
+			del urls.global_data[country]['publish_time'][index]
+			del urls.global_data[country]['views'][index]
+			del urls.global_data[country]['likes'][index]
+			del urls.global_data[country]['dislikes'][index]
+			del urls.global_data[country]['comment_count'][index]
+			del urls.global_data[country]['thumbnail_link'][index]
+			del urls.global_data[country]['comments_disabled'][index]
+			del urls.global_data[country]['ratings_disabled'][index]
+			del urls.global_data[country]['video_error_or_removed'][index]
+			del urls.global_data[country]['description'][index]
+
+	print('Deleted this shit.')
 
 def update(data):
 	print('DATA IS:', data)
