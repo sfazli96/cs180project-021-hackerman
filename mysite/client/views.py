@@ -35,6 +35,7 @@ def modifyDataset(request):
 				button_press = request.POST.get('insert')
 				data['country'] = insert_form.cleaned_data.get('country')
 				data['channel_title'] = insert_form.cleaned_data.get('channel_title')
+				data['title'] = insert_form.cleaned_data.get('title')
 				data['video_id'] = insert_form.cleaned_data.get('video_id')
 				data['trending_date'] = insert_form.cleaned_data.get('trending_date')
 				data['publish_date'] = insert_form.cleaned_data.get('publish_date')

@@ -215,7 +215,23 @@ def timeToTrend(dates, pub_date):
 	return delta.days
 
 def insert(data):
-	print('DATA IS:', data)
+	#print('DATA IS:', data)
+	urls.global_data[data['country']]['video_id'].append(data['video_id'])
+	urls.global_data[data['country']]['trending_date'].append(data['trending_date'])
+	urls.global_data[data['country']]['channel_title'].append(data['channel_title'])
+	urls.global_data[data['country']]['title'].append(data['title'])
+	urls.global_data[data['country']]['category_id'].append(data['category_id'])
+	urls.global_data[data['country']]['tags'].append([])
+	urls.global_data[data['country']]['publish_time'].append(data['publish_date'])
+	urls.global_data[data['country']]['views'].append(data['views'])
+	urls.global_data[data['country']]['likes'].append(data['likes'])
+	urls.global_data[data['country']]['dislikes'].append(data['dislikes'])
+	urls.global_data[data['country']]['comment_count'].append(data['comment_count'])
+	urls.global_data[data['country']]['thumbnail_link'].append('')
+	urls.global_data[data['country']]['comments_disabled'].append(False)
+	urls.global_data[data['country']]['ratings_disabled'].append(False)
+	urls.global_data[data['country']]['video_error_or_removed'].append(False)
+	urls.global_data[data['country']]['description'].append('')
 
 def delete(data):
 	print('DATA IS:', data)
