@@ -257,6 +257,29 @@ def most_popular_categories(country_name):
 
 	return analyze_this
 
+def most_active_comments():
+	# Create two lists: one for the keys, and one for the values
+	list_titles = list(urls.global_data['US']['title'])
+	list_comment_count = list(urls.global_data['US']['comment_count'])
+
+	# Create an empty dictionary for the above two lists
+	twentyFiveMostLiked = {}
+	top25MostLiked = {}
+
+	# Convert the comment_count list values into integers
+	for i in range(0, len(list_comment_count)):
+		list_comment_count[i] = int(list_comment_count[i])
+
+	# Another way of putting both lists into a dictionary file
+	twentyFiveMostLiked = {list_titles[i]: list_comment_count[i]
+	    for i in range(len(list_titles))}
+
+	# Sort the dictionary from most to least comment_count, and then push the top 20 results into another dictionary file
+	k = Counter(twentyFiveMostLiked)
+	top25MostLiked = dict(k.most_common(25))
+
+	return top25MostLiked
+
 # Get various modified data on each video
 # DONT WORRY ABOUT THIS CODE:
 # def video_info():
