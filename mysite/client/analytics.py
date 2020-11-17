@@ -286,6 +286,55 @@ def most_popular_categories(country_name):
 
 	return analyze_this
 
+def most_active_comments():
+	# Create two lists: one for the keys, and one for the values
+	list_titles = list(urls.global_data['US']['title'])
+	list_comment_count = list(urls.global_data['US']['comment_count'])
+
+	# Create an empty dictionary for the above two lists
+	twentyFiveMostLiked = {}
+	top25MostLiked = {}
+
+	# Convert the comment_count list values into integers
+	for i in range(0, len(list_comment_count)):
+		list_comment_count[i] = int(list_comment_count[i])
+
+	# Another way of putting both lists into a dictionary file
+	twentyFiveMostLiked = {list_titles[i]: list_comment_count[i]
+	    for i in range(len(list_titles))}
+
+	# Sort the dictionary from most to least comment_count, and then push the top 20 results into another dictionary file
+	k = Counter(twentyFiveMostLiked)
+	top25MostLiked = dict(k.most_common(25))
+
+	return top25MostLiked
+
+# Get various modified data on each video
+# DONT WORRY ABOUT THIS CODE:
+# def video_info():
+# 	# Make dictionary with video_ids
+# 	videos = {}
+
+# 	# Iterate through every country to get comment counts and
+# 	# various other information on each video
+# 	for country in global_data.keys():
+# 		# Create empty dictionary for each country
+# 		videos[country] = {}
+# 		for index, ID in enumerate(global_data[country]['video_id']):
+# 			if index == 0:
+# 				videos[country][ID] = {}
+# 				videos[country][ID]['comment_count'] = []
+# 			# Looks like: {'US': {'28x7aysd7': {'comment_count': [123, 123, 123, ...], 'thumbnail': 'asdjwhihasd.com', ...}}}
+# 			videos[country][ID]['comment_count'].append(global_data[country]['comment_count'][index])
+# 			videos[country][ID]['thumbnail_link'] = global_data[country]['thumbnail_link'][index]
+# 			videos[country][ID]['title'] = global_data[country]['title'][index]
+# 			# Modify publish time to look like trending date
+# 			# So, from 2017-11-10T17:00:03.000Z to 17.10.11
+# 			publish_time = parseDate(global_data[country]['publish_time'][index])
+# 			break
+# 			videos[country][ID]['published_date'] = publish_time
+
+#video_info()
 
 def comment_count_per_country():
 	# counts looks like:
