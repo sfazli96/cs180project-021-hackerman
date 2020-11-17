@@ -12,5 +12,5 @@ urlpatterns = [
 	path('most_active_comments/', views.mostActiveComments, name='mostActiveComments'),
 	path('', views.home, name='home'),
 	path('countries/', views.CountriesView.as_view(), name = 'countries'),
-
+	path('modifyDataset', views.modifyDataset, name='modifyDataset'),
 ]
