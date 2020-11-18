@@ -17,6 +17,7 @@ def categories_to_names(category, country):
 	# Iterate through json file until you've found the category ID passed in
 	for item in category_names['items']:
 		if category == item['id']:
+			#print('In categories_to_names', type(item['id']))
 			f.close()
 
 			# This return should look something like:
@@ -24,39 +25,37 @@ def categories_to_names(category, country):
 			return item['snippet']['title']
 			
 
-# Get various modified data on each video
-def video_info():
-	# Make dictionary with video_ids
-	videos = {}
+# # Get various modified data on each video
+# def video_info():
+# 	# Make dictionary with video_ids
+# 	videos = {}
 
-	# Iterate through every country to get comment counts and
-	# various other information on each video
-	for country in urls.global_data.keys():
-		# Create empty dictionary for each country
-		# Will look like: {'US': {'28x7aysd7': {'comment_count': 123, 'thumbnail': 'https://asdjwhihasd.com', ...}}}
-		videos[country] = {}
-		for index, ID in enumerate(urls.global_data[country]['video_id']):
-			if ID not in videos[country].keys():
-				videos[country][ID] = {}
-				videos[country][ID]['trending_dates'] = []
+# 	# Iterate through every country to get comment counts and
+# 	# various other information on each video
+# 	for country in urls.global_data.keys():
+# 		# Create empty dictionary for each country
+# 		# Will look like: {'US': {'28x7aysd7': {'comment_count': 123, 'thumbnail': 'https://asdjwhihasd.com', ...}}}
+# 		videos[country] = {}
+# 		for index, ID in enumerate(urls.global_data[country]['video_id']):
+# 			if ID not in videos[country].keys():
+# 				videos[country][ID] = {}
+# 				videos[country][ID]['trending_dates'] = []
 
-			videos[country][ID]['comment_count'] = urls.global_data[country]['comment_count'][index]
-			videos[country][ID]['thumbnail_link'] = urls.global_data[country]['thumbnail_link'][index]
-			videos[country][ID]['title'] = urls.global_data[country]['title'][index]
+# 			videos[country][ID]['comment_count'] = urls.global_data[country]['comment_count'][index]
+# 			videos[country][ID]['thumbnail_link'] = urls.global_data[country]['thumbnail_link'][index]
+# 			videos[country][ID]['title'] = urls.global_data[country]['title'][index]
 
-			# Modify publish time for easier calculations
-			# Looks like (year, day, month)
-			publish_time = parseDate(urls.global_data[country]['publish_time'][index])
-			videos[country][ID]['published_date'] = publish_time
-			videos[country][ID]['trending_dates'].append(urls.global_data[country]['trending_date'][index])
-			videos[country][ID]['category'] = categories_to_names(urls.global_data[country]['category_id'][index], country)
-			videos[country][ID]['likes'] = urls.global_data[country]['likes'][index]
-			videos[country][ID]['dislikes'] = urls.global_data[country]['dislikes'][index]
-			videos[country][ID]['views'] = urls.global_data[country]['views'][index]
+# 			# Modify publish time for easier calculations
+# 			# Looks like (year, day, month)
+# 			publish_time = parseDate(urls.global_data[country]['publish_time'][index])
+# 			videos[country][ID]['published_date'] = publish_time
+# 			videos[country][ID]['trending_dates'].append(urls.global_data[country]['trending_date'][index])
+# 			videos[country][ID]['category'] = categories_to_names(urls.global_data[country]['category_id'][index], country)
+# 			videos[country][ID]['likes'] = urls.global_data[country]['likes'][index]
+# 			videos[country][ID]['dislikes'] = urls.global_data[country]['dislikes'][index]
+# 			videos[country][ID]['views'] = urls.global_data[country]['views'][index]
 
-	return videos
-
-videos = video_info()
+# 	return videos
 
 # Average likes, dislikes and views per category for the USA.
 def avg_per_cat():
@@ -106,17 +105,23 @@ def avg_per_cat():
 
 	# Go through the categories to average likes/dislikes/views
 	for cat in categories:
-		avg_likes = response[names[cat]]['likes'][0]/response[names[cat]]['likes'][1]
-		avg_dislikes = response[names[cat]]['dislikes'][0] / \
-		    response[names[cat]]['dislikes'][1]
-		avg_views = response[names[cat]]['views'][0]/response[names[cat]]['views'][1]
+		likes_num = response[names[cat]]['likes'][0]
+		likes_den = response[names[cat]]['likes'][1]
+		#avg_likes = likes_num/likes_den
+
+		dislikes_num = response[names[cat]]['dislikes'][0]
+		dislikes_den = response[names[cat]]['dislikes'][1]
+		#avg_dislikes = dislikes_num/dislikes_den
+
+		views_num = response[names[cat]]['views'][0]
+		views_den = response[names[cat]]['views'][1]   
+		#avg_views = views_num/views_den
 
 		# Finally set this value to each category
-		analyze_this[names[cat]] = {'avg_likes': avg_likes,
-		    'avg_dislikes': avg_dislikes, 'avg_views': avg_views}
+		analyze_this[names[cat]] = {'avg_likes': {'numerator': likes_num, 'denominator': likes_den},
+		    'avg_dislikes': {'numerator': dislikes_num, 'denominator': dislikes_den}, 'avg_views': {'numerator': views_num, 'denominator': views_den}}
 
 	return analyze_this
-
 
 def top_20_most_liked():
 	# Create two lists: one for the keys, and one for the values
@@ -287,44 +292,44 @@ def most_popular_categories(country_name):
 	return analyze_this
 
 
-def comment_count_per_country():
-	# counts looks like:
-	# {'US': {'total_comments': 1242512, 'average_comments': 5000}}
-	counts = {}
-	for country in videos.keys():
-		counts[country] = {}
-		counts[country]['total_comments'] = 0
-		counts[country]['average_comments'] = 0
-		for ID in videos[country].keys():
-			counts[country]['total_comments'] += int(videos[country][ID]['comment_count'])
-		counts[country]['average_comments'] = counts[country]['total_comments']/len(videos[country].keys())
+# def comment_count_per_country():
+# 	# counts looks like:
+# 	# {'US': {'total_comments': 1242512, 'average_comments': 5000}}
+# 	counts = {}
+# 	for country in videos.keys():
+# 		counts[country] = {}
+# 		counts[country]['total_comments'] = 0
+# 		counts[country]['average_comments'] = 0
+# 		for ID in videos[country].keys():
+# 			counts[country]['total_comments'] += int(videos[country][ID]['comment_count'])
+# 		counts[country]['average_comments'] = counts[country]['total_comments']/len(videos[country].keys())
 
-	return counts
+# 	return counts
 
 # Grab top 5 trending length videos for each country
-def trending_stats():
-	# time looks like:
-	# {'US': {'18dja98s': {'trending_length': 1, 'time_to_trend': 1, 'thumbnail_link': 'https://aasidh.com'}, ...}, ...}
-	top5 = {}
-	time = {}
-	for country in videos.keys():
-		time[country] = {}
-		for ID in videos[country].keys():
-			time[country][ID] = {}
-			if len(videos[country][ID]['trending_dates']) > 0:
-				time[country][ID]['first_trend'] = videos[country][ID]['trending_dates'][0]
-				time[country][ID]['first_published'] = videos[country][ID]['publish_time']
-				time[country][ID]['trending_length'] = trendingLength(videos[country][ID]['trending_dates'])
-				time[country][ID]['time_to_trend'] = timeToTrend(videos[country][ID]['trending_dates'], videos[country][ID]['published_date'])
-				time[country][ID]['thumbnail_link'] = videos[country][ID]['thumbnail_link']
-			else:
-				time[country][ID]['first_trend'] = ''
-				time[country][ID]['first_published'] = ''
-				time[country][ID]['trending_length'] = 0
-				time[country][ID]['time_to_trend'] = 0
-				time[country][ID]['thumbnail_link'] = ''
-		top5[country] = {}
-		top5[country]['top_trending'] = topTrending(time[country])
+# def trending_stats():
+# 	# time looks like:
+# 	# {'US': {'18dja98s': {'trending_length': 1, 'time_to_trend': 1, 'thumbnail_link': 'https://aasidh.com'}, ...}, ...}
+# 	top5 = {}
+# 	time = {}
+# 	for country in videos.keys():
+# 		time[country] = {}
+# 		for ID in videos[country].keys():
+# 			time[country][ID] = {}
+# 			if len(videos[country][ID]['trending_dates']) > 0:
+# 				time[country][ID]['first_trend'] = videos[country][ID]['trending_dates'][0]
+# 				time[country][ID]['first_published'] = videos[country][ID]['publish_time']
+# 				time[country][ID]['trending_length'] = trendingLength(videos[country][ID]['trending_dates'])
+# 				time[country][ID]['time_to_trend'] = timeToTrend(videos[country][ID]['trending_dates'], videos[country][ID]['published_date'])
+# 				time[country][ID]['thumbnail_link'] = videos[country][ID]['thumbnail_link']
+# 			else:
+# 				time[country][ID]['first_trend'] = ''
+# 				time[country][ID]['first_published'] = ''
+# 				time[country][ID]['trending_length'] = 0
+# 				time[country][ID]['time_to_trend'] = 0
+# 				time[country][ID]['thumbnail_link'] = ''
+# 		top5[country] = {}
+# 		top5[country]['top_trending'] = topTrending(time[country])
 
-	# DO TOP 5 CALCULATIONS HERE
-	return time
+# 	# DO TOP 5 CALCULATIONS HERE
+# 	return time

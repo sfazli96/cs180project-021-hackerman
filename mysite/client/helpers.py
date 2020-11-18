@@ -1,6 +1,7 @@
 from difflib import SequenceMatcher
 from datetime import date
 from hackerman import urls
+from .analytics import categories_to_names
 import pathlib
 from google_drive_downloader import GoogleDriveDownloader as gdd
 import requests
@@ -233,12 +234,35 @@ def insert(data):
 	urls.global_data[data['country']]['video_error_or_removed'].append(False)
 	urls.global_data[data['country']]['description'].append('')
 
+	# Update averages here:
+	cat = str(data['category_id'])
+	country = data['country']
+	cat_name = categories_to_names(cat, country)
+
+	urls.averages[cat_name]['avg_likes']['numerator'] += int(data['likes'])
+	urls.averages[cat_name]['avg_likes']['denominator'] += 1
+
+	urls.averages[cat_name]['avg_dislikes']['numerator'] += int(data['dislikes'])
+	urls.averages[cat_name]['avg_dislikes']['denominator'] += 1
+
+	urls.averages[cat_name]['avg_views']['numerator'] += int(data['views'])
+	urls.averages[cat_name]['avg_views']['denominator'] += 1
+
 def delete(data):
 	#print('DATA IS:', data)
 	country = data['country']
 	indices_to_delete = []
 	for index, value in enumerate(urls.global_data[country]['channel_title']):
 		if data['channel_title'] == value:
+			cat = str(urls.global_data[country]['category_id'][index])
+			urls.averages[categories_to_names(cat, country)]['avg_likes']['numerator'] -= int(urls.global_data[country]['likes'][index])
+			urls.averages[categories_to_names(cat, country)]['avg_likes']['denominator'] -= 1
+
+			urls.averages[categories_to_names(cat, country)]['avg_dislikes']['numerator'] -= int(urls.global_data[country]['dislikes'][index])
+			urls.averages[categories_to_names(cat, country)]['avg_dislikes']['denominator'] -= 1
+
+			urls.averages[categories_to_names(cat, country)]['avg_views']['numerator'] -= int(urls.global_data[country]['views'][index])
+			urls.averages[categories_to_names(cat, country)]['avg_views']['denominator'] -= 1
 			del urls.global_data[country]['video_id'][index]
 			del urls.global_data[country]['trending_date'][index]
 			del urls.global_data[country]['channel_title'][index]
