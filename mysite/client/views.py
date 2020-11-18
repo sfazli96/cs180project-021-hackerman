@@ -325,4 +325,31 @@ def mostPopularCategory(request):
     viewsDivGB = plot(figure_or_data=views_fig_GB, output_type='div')
     context['viewsDivGB'] = viewsDivGB
 	
-    return render(request, 'mostPopularCategory.html', context) 
+    return render(request, 'mostPopularCategory.html', context)
+
+# Returns the Top 25 videos with the most active comments sections for each country
+def mostActiveComments(request):
+	context = {}
+	mostCommented = most_active_comments()
+
+	# Split the dictionary into two separate lists
+	most_commented_keys = []
+	most_commented_vals = []
+	items = mostCommented.items()
+	for item in items:
+		most_commented_keys.append(item[0]), most_commented_vals.append(item[1])
+
+	most_commented_fig = go.Figure(data=[go.Bar(x=most_commented_keys, y=most_commented_vals)], layout=go.Layout(title='<b>Top 25 Most Active Comments Sections', yaxis={'title': '<b>Number of Comments'}, xaxis={'title': '<b>Video Name'}))
+	mostCommentedDiv = plot(figure_or_data=most_commented_fig, output_type='div')
+	context['mostCommentedDiv'] = mostCommentedDiv
+
+	# Create a box that outputs the average number of likes
+	average_most_comments = 0
+
+	for i in most_commented_vals:
+		average_most_comments += i
+
+	average_most_comments = average_most_comments / len(most_commented_vals)
+	context['averageMostComments'] = average_most_comments
+
+	return render(request, 'mostCommented.html', context)
