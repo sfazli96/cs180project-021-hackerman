@@ -8,6 +8,7 @@ import plotly.graph_objs as go
 from hackerman import urls
 from google_drive_downloader import GoogleDriveDownloader as gdd
 import pathlib
+import time
 
 
 def home(request):
@@ -158,6 +159,7 @@ class CountriesView(View):
 		return render(request, self.template_name, context)
 
 def averagePerCategory(request):
+	time1 = time.perf_counter()
 	context = {}
 	#avg_per = avg_per_cat()
 
@@ -174,6 +176,8 @@ def averagePerCategory(request):
 	context['likes_div'] = likes_div
 	context['dislikes_div'] = dislikes_div
 	context['views_div'] = views_div
+	time2 = time.perf_counter()
+	print('This view took:', time2-time1, 'seconds')
 	return render(request, 'avgPerCat.html', context)
 
 
