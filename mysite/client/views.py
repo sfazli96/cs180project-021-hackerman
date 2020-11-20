@@ -8,6 +8,7 @@ import plotly.graph_objs as go
 from hackerman import urls
 from google_drive_downloader import GoogleDriveDownloader as gdd
 import pathlib
+import time
 
 
 def home(request):
@@ -131,7 +132,6 @@ class CountriesView(View):
 		data['category_id'] = request.GET.get('category_id')
 		data['tags'] = request.GET.get('tags')
 		if request.GET.get('channel_title'):
-			print(data['country'])
 			search = searchCSV(data, data['country'])
 			context['search'] = search
 			context['size'] = len(search['channel_title'])
@@ -159,13 +159,14 @@ class CountriesView(View):
 		return render(request, self.template_name, context)
 
 def averagePerCategory(request):
+	time1 = time.perf_counter()
 	context = {}
-	avg_per = avg_per_cat()
+	#avg_per = avg_per_cat()
 
-	categories = list(avg_per.keys())
-	avg_likes = [avg_per[cat]['avg_likes'] for cat in categories]
-	avg_dislikes = [avg_per[cat]['avg_dislikes'] for cat in categories]
-	avg_views = [avg_per[cat]['avg_views'] for cat in categories]
+	categories = list(urls.averages.keys())
+	avg_likes = [urls.averages[cat]['avg_likes']['numerator']/urls.averages[cat]['avg_likes']['denominator'] for cat in categories]
+	avg_dislikes = [urls.averages[cat]['avg_dislikes']['numerator']/urls.averages[cat]['avg_dislikes']['denominator'] for cat in categories]
+	avg_views = [urls.averages[cat]['avg_views']['numerator']/urls.averages[cat]['avg_views']['denominator'] for cat in categories]
 	likes_fig = go.Figure(data=[go.Bar(x=categories, y=avg_likes)], layout=go.Layout(width=800, height=450, title='Average Likes Per Category in the USA', yaxis={'title': 'Likes'}, xaxis={'title': 'Categories'}))
 	dislikes_fig = go.Figure(data=[go.Bar(x=categories, y=avg_dislikes)], layout=go.Layout(width=800, height=450, title='Average Dislikes Per Category in the USA', yaxis={'title': 'Dislikes'}, xaxis={'title': 'Categories'}))
 	views_fig = go.Figure(data=[go.Bar(x=categories, y=avg_views)], layout=go.Layout(width=800, height=450, title='Average Views Per Category in the USA', yaxis={'title': 'Views'}, xaxis={'title': 'Categories'}))
@@ -175,6 +176,8 @@ def averagePerCategory(request):
 	context['likes_div'] = likes_div
 	context['dislikes_div'] = dislikes_div
 	context['views_div'] = views_div
+	time2 = time.perf_counter()
+	print('This view took:', time2-time1, 'seconds')
 	return render(request, 'avgPerCat.html', context)
 
 
@@ -330,3 +333,30 @@ def mostPopularCategory(request):
 
 def about(request):
 	return render(request, 'about.html', {})
+
+# Returns the Top 25 videos with the most active comments sections for each country
+def mostActiveComments(request):
+	context = {}
+	mostCommented = most_active_comments()
+
+	# Split the dictionary into two separate lists
+	most_commented_keys = []
+	most_commented_vals = []
+	items = mostCommented.items()
+	for item in items:
+		most_commented_keys.append(item[0]), most_commented_vals.append(item[1])
+
+	most_commented_fig = go.Figure(data=[go.Bar(x=most_commented_keys, y=most_commented_vals)], layout=go.Layout(title='<b>Top 25 Most Active Comments Sections', yaxis={'title': '<b>Number of Comments'}, xaxis={'title': '<b>Video Name'}))
+	mostCommentedDiv = plot(figure_or_data=most_commented_fig, output_type='div')
+	context['mostCommentedDiv'] = mostCommentedDiv
+
+	# Create a box that outputs the average number of likes
+	average_most_comments = 0
+
+	for i in most_commented_vals:
+		average_most_comments += i
+
+	average_most_comments = average_most_comments / len(most_commented_vals)
+	context['averageMostComments'] = average_most_comments
+
+	return render(request, 'mostCommented.html', context)

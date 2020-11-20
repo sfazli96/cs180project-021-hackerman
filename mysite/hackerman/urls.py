@@ -15,13 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from client import helpers
+from client import helpers, analytics
 
 # Countries get passed in on startup
 countries = ['US', 'GB', 'DE', 'CA']
 
 # Data gets loaded up immediately.
+print('Now loading up files...')
 global_data = helpers.loadCSV(countries)
+print('Now taking averages')
+averages = analytics.avg_per_cat()
+# print('Now saving video information...')
+# videos = analytics.video_info()
 
 urlpatterns = [
     path('', include('client.urls')),
