@@ -1,0 +1,21 @@
+/* These two aren't responsive, but show what we want */
+div {
+  margin: 4em auto;
+  width: 50px;
+  height: 50px;
+  border: 10px solid lime;
+}
+#two {
+  width: 200px;
+  height: 200px;
+  border: 40px solid lime;
+}
+
+/* This one IS responsive, using EW units for the border width */
+@element #three {
+  $this {
+    width: 100%;
+    height: 100ew;
+    border: 20ew solid lime;
+  }
+}

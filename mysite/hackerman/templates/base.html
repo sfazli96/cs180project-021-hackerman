@@ -24,7 +24,9 @@
       </li>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'about' %}" style="color: #F6F6F1; position: relative; bottom: 0px; ">About</a>
+        <a class="nav-link" href="{% url 'about' %}" style="color: #F6F6F1;bottom: 0px;">About</a>
+        <link href="{% static 'css/about.css' %}" rel="stylesheet">
+        <div class="menu"></div>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'modifyDataset' %}" style="color: #F6F6F1;">Modify Dataset</a>
