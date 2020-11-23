@@ -1,7 +1,10 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+{% load static %}
+
 
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #271909;">
+  <link href="{% static 'css/base.css' %}" rel="stylesheet">
   <span style="font-size: 2em; color: #E11010;">
     <i class="fab fa-youtube"></i>
   </span>
@@ -12,7 +15,7 @@
   <div class="collapse navbar-collapse" id="navbarNav">
   </span>
     <ul class="navbar-nav">
-        <span style="font-size: 1em; color: #15FCEE; position: absolute; position: relative; top: 10px; left: 0px; ">
+        <span style="font-size: 1em; color: #15FCEE; position: absolute; position: relative; top: 5px;  ">
           <i class="fas fa-globe"></i></a>
         </span>
       <li class="nav-item">
@@ -21,15 +24,14 @@
       </li>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'about' %}" style="color: #F6F6F1; position: relative; bottom: 0px; left: 1500px;">About</a>
+        <a class="nav-link" href="{% url 'about' %}" style="color: #F6F6F1; position: relative; bottom: 0px; ">About</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'modifyDataset' %}" style="color: #F6F6F1; position:absolute;
-  left: 320;">Modify Dataset</a>
+        <a class="nav-link" href="{% url 'modifyDataset' %}" style="color: #F6F6F1;">Modify Dataset</a>
       </li>
       <div class="dropdown">
       <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #271909; position:absolute;
-  left: 60;">
+  ">
         Analytics
       </a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
