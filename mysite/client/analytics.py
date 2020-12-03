@@ -57,48 +57,52 @@ def categories_to_names(category, country):
 
 # 	return videos
 
-# Average likes, dislikes and views per category for the USA.
+# Average likes, dislikes and views per category for all countries together.
 def avg_per_cat():
 
 	# Create empty dictionaries for data we want
 	response = {}
 	names = {}
 
-	# Make list of unique category ID values
-	# categories looks liks this:
-	# categories = [1, 15, 22, 25, ...]
-	categories = list(set(urls.global_data['US']['category_id']))
+	countries_list = ['US', 'CA', 'GB', 'DE']
 
-	# Initialize names and response dictionaries
-	for cat in categories:
-		# Convert category ID to string
-		name = categories_to_names(cat, 'US')
+	# Iterate through the whole countries list
+	for currCountry in countries_list:
+		# Make list of unique category ID values
+		# categories looks liks this:
+		# categories = [1, 15, 22, 25, ...]
+		categories = list(set(urls.global_data[currCountry]['category_id']))
 
-		# names looks like:
-		# {22: 'Entertainment', 24: 'Gaming', ...}
-		names[cat] = name
+		# Initialize names and response dictionaries
+		for cat in categories:
+			# Convert category ID to string
+			name = categories_to_names(cat, currCountry)
 
-		# resposne looks like:
-		# {'Entertainment': {'likes': [0, 0], 'dislikes': [0, 0], 'views': [0, 0]}, ...}
-		response[name] = {'likes': [0, 0], 'dislikes': [0, 0], 'views': [0, 0]}
+			# names looks like:
+			# {22: 'Entertainment', 24: 'Gaming', ...}
+			names[cat] = name
 
-	# Iterate through category IDs, and enumerate to have index
-	for i, value in enumerate(urls.global_data['US']['category_id']):
-		if value:
-			# If the likes entry exists and is not null
-			if urls.global_data['US']['likes'][i]:
-				# Then record the data into the response dictionary
-				response[names[value]
-				    ]['likes'][0] += int(urls.global_data['US']['likes'][i])
-				response[names[value]]['likes'][1] += 1
-			if urls.global_data['US']['dislikes'][i]:
-				response[names[value]
-				    ]['dislikes'][0] += int(urls.global_data['US']['dislikes'][i])
-				response[names[value]]['dislikes'][1] += 1
-			if urls.global_data['US']['views'][i]:
-				response[names[value]
-				    ]['views'][0] += int(urls.global_data['US']['views'][i])
-				response[names[value]]['views'][1] += 1
+			# resposne looks like:
+			# {'Entertainment': {'likes': [0, 0], 'dislikes': [0, 0], 'views': [0, 0]}, ...}
+			response[name] = {'likes': [0, 0], 'dislikes': [0, 0], 'views': [0, 0]}
+
+		# Iterate through category IDs, and enumerate to have index
+		for i, value in enumerate(urls.global_data[currCountry]['category_id']):
+			if value:
+				# If the likes entry exists and is not null
+				if urls.global_data[currCountry]['likes'][i]:
+					# Then record the data into the response dictionary
+					response[names[value]
+						]['likes'][0] += int(urls.global_data[currCountry]['likes'][i])
+					response[names[value]]['likes'][1] += 1
+				if urls.global_data[currCountry]['dislikes'][i]:
+					response[names[value]
+						]['dislikes'][0] += int(urls.global_data[currCountry]['dislikes'][i])
+					response[names[value]]['dislikes'][1] += 1
+				if urls.global_data[currCountry]['views'][i]:
+					response[names[value]
+						]['views'][0] += int(urls.global_data[currCountry]['views'][i])
+					response[names[value]]['views'][1] += 1
 
 	# This dictionary will hold all numbers used to plot the graph
 	analyze_this = {}
