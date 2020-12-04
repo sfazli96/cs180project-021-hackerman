@@ -231,7 +231,7 @@ def top20MostDisliked(request):
 		mostDislikedTemp = top_20_most_disliked(country)
 		mostDislikedTemp2.update(mostDislikedTemp)
 
-	# Sort the dictionary from most to least likes, and then push the top 20 results into another dictionary file
+	# Sort the dictionary from most to least dislikes, and then push the top 20 results into another dictionary file
 	k = Counter(mostDislikedTemp2)
 	mostDisliked = dict(k.most_common(20))
 
@@ -355,7 +355,16 @@ def about(request):
 # Returns the Top 25 videos with the most active comments sections for each country
 def mostActiveComments(request):
 	context = {}
-	mostCommented = most_active_comments()
+	mostCommentedTemp2 = {}
+	countries_list = ['US', 'GB', 'DE', 'CA']
+
+	for country in countries_list:
+		mostCommentedTemp = most_active_comments(country)
+		mostCommentedTemp2.update(mostCommentedTemp)
+
+	# Sort the dictionary from most to least comment_count, and then push the top 20 results into another dictionary file
+	k = Counter(mostCommentedTemp2)
+	mostCommented = dict(k.most_common(25))
 
 	# Split the dictionary into two separate lists
 	most_commented_keys = []

@@ -291,10 +291,10 @@ def most_popular_categories(country_name):
 
 	return analyze_this
 
-def most_active_comments():
+def most_active_comments(country):
 	# Create two lists: one for the keys, and one for the values
-	list_titles = list(urls.global_data['US']['title'])
-	list_comment_count = list(urls.global_data['US']['comment_count'])
+	list_titles = list(urls.global_data[country]['title'])
+	list_comment_count = list(urls.global_data[country]['comment_count'])
 
 	# Create an empty dictionary for the above two lists
 	twentyFiveMostLiked = {}
