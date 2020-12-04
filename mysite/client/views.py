@@ -224,7 +224,16 @@ def top20MostLiked(request):
 # Calculates the average number of dislikes per video (out of the Top 20)
 def top20MostDisliked(request):
 	context = {}
-	mostDisliked = top_20_most_disliked()
+	mostDislikedTemp2 = {}
+	countries_list = ['US', 'GB', 'DE', 'CA']
+
+	for country in countries_list:
+		mostDislikedTemp = top_20_most_disliked(country)
+		mostDislikedTemp2.update(mostDislikedTemp)
+
+	# Sort the dictionary from most to least likes, and then push the top 20 results into another dictionary file
+	k = Counter(mostDislikedTemp2)
+	mostDisliked = dict(k.most_common(20))
 
 	# Split the dictionary into two separate lists
 	most_disliked_keys = []

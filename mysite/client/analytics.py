@@ -146,10 +146,10 @@ def top_20_most_liked(country):
 
 	return top20mostliked
 
-def top_20_most_disliked():
+def top_20_most_disliked(country):
 	# Create two lists: one for the keys, and one for the values
-	list_titles = list(urls.global_data['US']['title'])
-	list_dislikes = list(urls.global_data['US']['dislikes'])
+	list_titles = list(urls.global_data[country]['title'])
+	list_dislikes = list(urls.global_data[country]['dislikes'])
 
 	# Create an empty dictionary for the above two lists
 	twentyMostDisliked = {}
