@@ -186,7 +186,16 @@ def averagePerCategory(request):
 # Calculates the average number of likes per video (out of the Top 20)
 def top20MostLiked(request):
 	context = {}
-	mostLiked = top_20_most_liked()
+	mostLikedTemp2 = {}
+	countries_list = ['US', 'GB', 'DE', 'CA']
+
+	for country in countries_list:
+		mostLikedTemp = top_20_most_liked(country)
+		mostLikedTemp2.update(mostLikedTemp)
+
+	# Sort the dictionary from most to least likes, and then push the top 20 results into another dictionary file
+	k = Counter(mostLikedTemp2)
+	mostLiked = dict(k.most_common(20))
 
 	# Split the dictionary into two separate lists
 	most_liked_keys = []
@@ -215,7 +224,16 @@ def top20MostLiked(request):
 # Calculates the average number of dislikes per video (out of the Top 20)
 def top20MostDisliked(request):
 	context = {}
-	mostDisliked = top_20_most_disliked()
+	mostDislikedTemp2 = {}
+	countries_list = ['US', 'GB', 'DE', 'CA']
+
+	for country in countries_list:
+		mostDislikedTemp = top_20_most_disliked(country)
+		mostDislikedTemp2.update(mostDislikedTemp)
+
+	# Sort the dictionary from most to least dislikes, and then push the top 20 results into another dictionary file
+	k = Counter(mostDislikedTemp2)
+	mostDisliked = dict(k.most_common(20))
 
 	# Split the dictionary into two separate lists
 	most_disliked_keys = []
@@ -337,7 +355,16 @@ def about(request):
 # Returns the Top 25 videos with the most active comments sections for each country
 def mostActiveComments(request):
 	context = {}
-	mostCommented = most_active_comments()
+	mostCommentedTemp2 = {}
+	countries_list = ['US', 'GB', 'DE', 'CA']
+
+	for country in countries_list:
+		mostCommentedTemp = most_active_comments(country)
+		mostCommentedTemp2.update(mostCommentedTemp)
+
+	# Sort the dictionary from most to least comment_count, and then push the top 20 results into another dictionary file
+	k = Counter(mostCommentedTemp2)
+	mostCommented = dict(k.most_common(25))
 
 	# Split the dictionary into two separate lists
 	most_commented_keys = []
