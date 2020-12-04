@@ -167,9 +167,9 @@ def averagePerCategory(request):
 	avg_likes = [urls.averages[cat]['avg_likes']['numerator']/urls.averages[cat]['avg_likes']['denominator'] for cat in categories]
 	avg_dislikes = [urls.averages[cat]['avg_dislikes']['numerator']/urls.averages[cat]['avg_dislikes']['denominator'] for cat in categories]
 	avg_views = [urls.averages[cat]['avg_views']['numerator']/urls.averages[cat]['avg_views']['denominator'] for cat in categories]
-	likes_fig = go.Figure(data=[go.Bar(x=categories, y=avg_likes)], layout=go.Layout(width=800, height=450, title='Average Likes Per Category in the USA', yaxis={'title': 'Likes'}, xaxis={'title': 'Categories'}))
-	dislikes_fig = go.Figure(data=[go.Bar(x=categories, y=avg_dislikes)], layout=go.Layout(width=800, height=450, title='Average Dislikes Per Category in the USA', yaxis={'title': 'Dislikes'}, xaxis={'title': 'Categories'}))
-	views_fig = go.Figure(data=[go.Bar(x=categories, y=avg_views)], layout=go.Layout(width=800, height=450, title='Average Views Per Category in the USA', yaxis={'title': 'Views'}, xaxis={'title': 'Categories'}))
+	likes_fig = go.Figure(data=[go.Bar(x=categories, y=avg_likes)], layout=go.Layout(width=800, height=450, title='Average Likes Per Category For US/GB/DE/CA', yaxis={'title': 'Likes'}, xaxis={'title': 'Categories'}))
+	dislikes_fig = go.Figure(data=[go.Bar(x=categories, y=avg_dislikes)], layout=go.Layout(width=800, height=450, title='Average Dislikes Per Category For US/GB/DE/CA', yaxis={'title': 'Dislikes'}, xaxis={'title': 'Categories'}))
+	views_fig = go.Figure(data=[go.Bar(x=categories, y=avg_views)], layout=go.Layout(width=800, height=450, title='Average Views Per Category For US/GB/DE/CA', yaxis={'title': 'Views'}, xaxis={'title': 'Categories'}))
 	likes_div = plot(figure_or_data=likes_fig, output_type='div')
 	dislikes_div = plot(figure_or_data=dislikes_fig, output_type='div')
 	views_div = plot(figure_or_data=views_fig, output_type='div')
