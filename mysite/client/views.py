@@ -186,7 +186,16 @@ def averagePerCategory(request):
 # Calculates the average number of likes per video (out of the Top 20)
 def top20MostLiked(request):
 	context = {}
-	mostLiked = top_20_most_liked()
+	mostLikedTemp2 = {}
+	countries_list = ['US', 'GB', 'DE', 'CA']
+
+	for country in countries_list:
+		mostLikedTemp = top_20_most_liked(country)
+		mostLikedTemp2.update(mostLikedTemp)
+
+	# Sort the dictionary from most to least likes, and then push the top 20 results into another dictionary file
+	k = Counter(mostLikedTemp2)
+	mostLiked = dict(k.most_common(20))
 
 	# Split the dictionary into two separate lists
 	most_liked_keys = []
