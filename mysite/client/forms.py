@@ -14,6 +14,41 @@ COUNTRIES = [
   ('US', 'United States')
 ]
 
+CATEGORIES = [
+	('1', 'Film & Animation'),
+	('2', 'Autos & Vehicles'),
+	('10', 'Music'),
+	('15', 'Pets & Animals'),
+	('17', 'Sports'),
+	('18', 'Short Movies'),
+	('19', 'Travel & Events'),
+	('20', 'Gaming'),
+	('21', 'Videoblogging'),
+	('22', 'People & Blogs'),
+	('23', 'Comedy'),
+	('24', 'Entertainment'),
+	('25', 'News & Politics'),
+	('26', 'Howto & Style'),
+	('27', 'Education'),
+	('28', 'Science & Technology'),
+	('29', 'Nonprofits & Activism'),
+	('30', 'Movies'),
+	('31', 'Anime/Animation'),
+	('32', 'Action/Adventure'),
+	('33', 'Classics'),
+	('34', 'Comedy'),
+	('35', 'Documentary'),
+	('36', 'Drama'),
+	('37', 'Family'),
+	('38', 'Foreign'),
+	('39', 'Horror'),
+	('40', 'Sci-Fi/Fantasy'),
+	('41', 'Thriller'),
+	('42', 'Shorts'),
+	('43', 'Shows'),
+	('44', 'Trailers')
+]
+
 class countriesForm(forms.Form):
 	country = forms.CharField(required=True, label='Country')
 	channel_title = forms.CharField(required=False, label='Channel name:')
@@ -30,9 +65,9 @@ class InsertForm(forms.Form):
 	channel_title = forms.CharField(required=True, label='Channel name:')
 	video_id = forms.CharField(required=True, label='Video ID:')
 	title = forms.CharField(required=True, label='Video title:')
-	trending_date = forms.DateField(required=True, label='Trending date:')
-	publish_date = forms.DateField(required=True, label='Publish Date:')
-	category_id = forms.IntegerField(required=True, label='Category ID:')
+	trending_date = forms.DateField(required=True, label='Trending date (MM/DD/YY):')
+	publish_date = forms.DateField(required=True, label='Publish Date (MM/DD/YY):')
+	category_id = forms.CharField(required=True, label='Category ID:', widget=forms.Select(choices=CATEGORIES))
 	views = forms.CharField(required=True, label='Views:')
 	likes = forms.CharField(required=True, label='Likes:')
 	dislikes = forms.CharField(required=True, label='Dislikes:')
@@ -57,9 +92,9 @@ class UpdateForm(forms.Form):
 	country= forms.CharField(required=True, label='Choose a country', widget=forms.Select(choices=COUNTRIES))
 	channel_title = forms.CharField(required=True, label='Channel name:')
 	video_id = forms.CharField(required=False, label='Video ID:')
-	trending_date = forms.CharField(required=False, label='Trending date:')
-	publish_date = forms.CharField(required=False, label='Publish Date:')
-	category_id = forms.IntegerField(required=False, label='Category ID:')
+	trending_date = forms.CharField(required=False, label='Trending date (MM/DD/YY):')
+	publish_date = forms.CharField(required=False, label='Publish Date (MM/DD/YY):')
+	category_id = forms.CharField(required=False, label='Category ID:', widget=forms.Select(choices=CATEGORIES))
 	views = forms.CharField(required=False, label='Views:')
 	likes = forms.CharField(required=False, label='Likes:')
 	dislikes = forms.CharField(required=False, label='Dislikes:')
