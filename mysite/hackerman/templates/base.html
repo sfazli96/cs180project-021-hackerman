@@ -1,23 +1,21 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+{% load static %}
+
 
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #271909;">
+  <link href="{% static 'css/base.css' %}" rel="stylesheet">
   <span style="font-size: 2em; color: #E11010;">
     <i class="fab fa-youtube"></i>
   </span>
-  <a class="navbar-brand" href="{% url 'home' %}" style="color: #F6F6F1">Youtube Trending</a>
+  <a class="navbar-brand" href="{% url 'home' %}" style="color: #F6F6F1;">Youtube Trending</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
-    <span style="font-size: 1em; color: Red;">
-    <i class="fas fa-flag-usa"></i>
   </span>
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'US' %}" style="color: #F6F6F1">United States</a>
-      </li>
-        <span style="font-size: 1em; color: #15FCEE; position: absolute; position: relative; top: 10px; left: 0px; ">
+        <span style="font-size: 1em; color: #15FCEE; position: absolute; position: relative; top: 5px;  ">
           <i class="fas fa-globe"></i></a>
         </span>
       <li class="nav-item">
@@ -26,25 +24,38 @@
       </li>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" style="color: #F6F6F1">By Category</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'modifyDataset' %}" style="color: #F6F6F1">Modify Dataset</a>
+        <a class="nav-link" href="{% url 'modifyDataset' %}" style="color: #F6F6F1;">Modify Dataset</a>
       </li>
       <div class="dropdown">
-      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #271909;">
+      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #271909; position:absolute;
+  ">
         Analytics
       </a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" href="{% url 'top20MostLiked' %}">Top 20 Most Liked videos</a>
-        <a class="dropdown-item" href="{% url 'top20MostDisliked' %}">Top 20 Most Disliked videos</a>
-        <a class="dropdown-item" href="{% url 'avgPerCat' %}">Average Per Category(US)</a>
-        <a class="dropdown-item" href="{% url 'disabledCommentsAndRatings' %}">Disabled Comments and Ratings</a>
-        <a class="dropdown-item" href="{% url 'mostPopularCategory' %}">Most Popular Category Per Country</a>
+        <a class="dropdown-item" href="{%url 'top20MostLiked' %}"> 
+          <span style="font-size: 25px; color: #04FF00;">
+        <i class="fas fa-thumbs-up"></i>
+          </span>Top 20 Most Liked videos</a> 
+        <a class="dropdown-item" href="{%url 'top20MostDisliked' %}"> 
+          <span style="font-size: 25px; color: #FF2019;">
+        <i class="fas fa-thumbs-down"></i> 
+      </span>Top 20 Most Disliked videos</a> 
+        <a class="dropdown-item" href="{% url 'avgPerCat' %}">
+        <span style="font-size: 25px; color: #EE1313">
+          <i class="fas fa-flag-usa"></i>
+        </span>Average Per Category(US)</a>
+        <a class="dropdown-item" href="{% url 'disabledCommentsAndRatings' %}">
+          <span style="font-size: 25px; color: #00F0FF">
+            <i class="fas fa-comments"></i>
+          </span>Disabled Comments and Ratings</a>
+        <a class="dropdown-item" href="{% url 'mostPopularCategory' %}">
+        <span style="font-size: 25px; color: #0EFFED">
+          <i class="fas fa-globe"></i>
+        </span>Most Popular Category Per Country</a>
         <a class="dropdown-item" href="{% url 'mostActiveComments' %}">Most Active Comments Sections</a>
         <div class="clear"></div>
+      </li>
     </div>
-
     </ul>
   </div>
 </nav>

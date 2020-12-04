@@ -329,7 +329,10 @@ def mostPopularCategory(request):
     viewsDivGB = plot(figure_or_data=views_fig_GB, output_type='div')
     context['viewsDivGB'] = viewsDivGB
 	
-    return render(request, 'mostPopularCategory.html', context)
+    return render(request, 'mostPopularCategory.html', context) 
+
+def about(request):
+	return render(request, 'about.html', {})
 
 # Returns the Top 25 videos with the most active comments sections for each country
 def mostActiveComments(request):
