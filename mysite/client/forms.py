@@ -65,8 +65,8 @@ class InsertForm(forms.Form):
 	channel_title = forms.CharField(required=True, label='Channel name:')
 	video_id = forms.CharField(required=True, label='Video ID:')
 	title = forms.CharField(required=True, label='Video title:')
-	trending_date = forms.DateField(required=True, label='Trending date (MM/DD/YY):')
-	publish_date = forms.DateField(required=True, label='Publish Date (MM/DD/YY):')
+	trending_date = forms.CharField(required=True, label='Trending date (YY.DD.MM):')
+	publish_date = forms.CharField(required=True, label='Publish Date (YYYY-MM-DDT, must include T at the end):')
 	category_id = forms.CharField(required=True, label='Category ID:', widget=forms.Select(choices=CATEGORIES))
 	views = forms.CharField(required=True, label='Views:')
 	likes = forms.CharField(required=True, label='Likes:')
@@ -76,13 +76,13 @@ class InsertForm(forms.Form):
 	# Compares the published date and trending date of inserted video
 	# Makes sure that a video doesn't trend before it publishes because that would make no fucking sense
 	# User validation test case
-	def clean_publish_date(self):
-		cleaned_data = super(InsertForm, self).clean()
-		trending_date = cleaned_data['trending_date']
-		publish_date = cleaned_data['publish_date']
-		if publish_date > trending_date :
-			raise forms.ValidationError("Publish date should not be before the trending date.")
-		return cleaned_data
+	#def clean_publish_date(self):
+	#	cleaned_data = super(InsertForm, self).clean()
+	#	trending_date = cleaned_data['trending_date']
+	#	publish_date = cleaned_data['publish_date']
+	#	if publish_date > trending_date :
+	#		raise forms.ValidationError("Publish date should not be before the trending date.")
+	#	return cleaned_data
 	
 class DeleteForm(forms.Form):
 	country= forms.CharField(required=True, label='Choose a country', widget=forms.Select(choices=COUNTRIES))
@@ -92,8 +92,8 @@ class UpdateForm(forms.Form):
 	country= forms.CharField(required=True, label='Choose a country', widget=forms.Select(choices=COUNTRIES))
 	channel_title = forms.CharField(required=True, label='Channel name:')
 	video_id = forms.CharField(required=False, label='Video ID:')
-	trending_date = forms.CharField(required=False, label='Trending date (MM/DD/YY):')
-	publish_date = forms.CharField(required=False, label='Publish Date (MM/DD/YY):')
+	trending_date = forms.CharField(required=False, label='Trending date (YY.DD.MM):')
+	publish_date = forms.CharField(required=False, label='Publish Date (YYYY-MM-DDT, must include T at the end):')
 	category_id = forms.CharField(required=False, label='Category ID:', widget=forms.Select(choices=CATEGORIES))
 	views = forms.CharField(required=False, label='Views:')
 	likes = forms.CharField(required=False, label='Likes:')

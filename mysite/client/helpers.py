@@ -223,7 +223,7 @@ def insert(data):
 	urls.global_data[data['country']]['title'].append(data['title'])
 	urls.global_data[data['country']]['category_id'].append(data['category_id'])
 	urls.global_data[data['country']]['tags'].append([])
-	urls.global_data[data['country']]['publish_time'].append(data['publish_date'])
+	urls.global_data[data['country']]['publish_time'].append(data['publish_date']+ '17:00:03.000Z')
 	urls.global_data[data['country']]['views'].append(data['views'])
 	urls.global_data[data['country']]['likes'].append(data['likes'])
 	urls.global_data[data['country']]['dislikes'].append(data['dislikes'])
