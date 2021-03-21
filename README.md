@@ -27,3 +27,10 @@ Once the command prompt has it up and running, go to the IP address link shown i
 
 ### Turning Off the Server
 To deactivate the website, you need to run `deactivate` in the terminal command line. Do this before exiting the terminal!
+
+## Authors and Contributor List
+
+* Christian Campos - https://github.com/ccamp032
+* Chris Daniels - https://github.com/ChairMane
+* Sameh Fazli - https://github.com/sfazli96
+* Alexander Ku - https://github.com/aku006
