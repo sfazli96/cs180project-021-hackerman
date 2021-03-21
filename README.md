@@ -13,13 +13,15 @@ To turn on the website, the user needs to do the following commands in the termi
 
 If this is your first time downloading this, you need to install the following packages. Otherwise, you can skip this step:
 
+`pip install python3`
+
 `pip install Django`
 
 `pip install googledrivedownloader`
 
 `pip install plotly`
 
-To run the server, run: `python manage.py runserver`
+To run the server, run: `python3 manage.py runserver`
 
 Once the command prompt has it up and running, go to the IP address link shown in the terminal.
 
