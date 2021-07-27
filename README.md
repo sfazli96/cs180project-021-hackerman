@@ -11,6 +11,7 @@ To turn on the website, the user needs to do the following commands in the termi
 
 `source venv/bin/activate`
 
+test
 If this is your first time downloading this, you need to install the following packages. Otherwise, you can skip this step:
 
 `pip install python3`
