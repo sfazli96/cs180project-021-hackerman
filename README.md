@@ -15,11 +15,13 @@ If this is your first time downloading this, you need to install the following t
 
 https://www.docker.com/get-started 
 
-To run the server, First build the docker image
+https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker (Docker extension for Visual Studio Code)
+
+To run the server, First build the docker image in Visual Studio Code
 
 `docker build --tag python-django . `
 
-Then, check if the image has been built correctly
+Then, check if the image has been built correctly in Visual Studio Code
 
 `docker images`
 
