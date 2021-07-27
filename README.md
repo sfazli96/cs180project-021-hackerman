@@ -4,30 +4,36 @@ cs180project-021-hackerman created by GitHub Classroom
 ### Description
 This project is a data store that analyzes information about YouTube video data in different countries, and how each country's information compares with others (e.g. which videos are more popular between the United States and Germany). This project uses data from four countries: the United States (US), Germany (DE), Canda (CA), and the United Kingdom (UK).
 
-### Setting Up the Server and Running It
+### Setting Up the Server and Running It within Docker
 To turn on the website, the user needs to do the following commands in the terminal:
 
 `cd cs180project-021-hackerman/mysite`
 
 `source venv/bin/activate`
 
-test
-If this is your first time downloading this, you need to install the following packages. Otherwise, you can skip this step:
+If this is your first time downloading this, you need to install the following things. Otherwise, you can skip this step:
 
-`pip install python3`
+https://www.docker.com/get-started 
 
-`pip install Django`
+To run the server, First build the docker image
 
-`pip install googledrivedownloader`
+`docker build --tag python-django . `
 
-`pip install plotly`
+Then, check if the image has been built correctly
 
-To run the server, run: `python3 manage.py runserver`
+`docker images`
 
-Once the command prompt has it up and running, go to the IP address link shown in the terminal.
+Last, run the docker image
+
+`docker run --publish 8000:8000 python-django`
+
+Once the command prompt has it up and running, go to `localhost:8000`.
+
+Viola, The website is up and running within Docker!
 
 ### Turning Off the Server
-To deactivate the website, you need to run `deactivate` in the terminal command line. Do this before exiting the terminal!
+To deactivate the website, you need to run `deactivate` in the terminal command line. Do this before exiting the terminal! 
+Another way to deactivate the website, press control+c on command line and it will kill the program.
 
 ## Authors and Contributor List
 
